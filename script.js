@@ -1,11 +1,11 @@
-// ====== VERSION ======
-const VERSION = '3.1.2';
+// ====== ВЕРСИЯ ======
+const VERSION = '3.2.0';
 
-// ====== CATEGORIES ======
+// ====== КАТЕГОРИИ ======
 const CATEGORY_LABELS = {
-    '3d-models': '3D Model',
-    'textures': 'Texture',
-    'projects': 'Project'
+    '3d-models': '3D-модель',
+    'textures': 'Текстура',
+    'projects': 'Проект'
 };
 
 const CATEGORY_ICONS = {
@@ -14,14 +14,14 @@ const CATEGORY_ICONS = {
     'projects': '📐'
 };
 
-// ====== GLOBAL VARIABLES ======
+// ====== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ======
 let products = [];
 let cart = [];
 let currentCategory = 'all';
 
-// ====== LOAD DATA FROM data.json ======
+// ====== ЗАГРУЗКА ДАННЫХ ИЗ data.json ======
 async function loadData() {
-    console.log(`🔍 [${VERSION}] Loading data...`);
+    console.log(`🔍 [${VERSION}] Загрузка данных...`);
     
     try {
         const response = await fetch('data.json?t=' + Date.now());
@@ -30,12 +30,12 @@ async function loadData() {
             if (Array.isArray(data) && data.length > 0) {
                 products = data;
                 localStorage.setItem('3dshop_products', JSON.stringify(products));
-                console.log(`✅ Loaded ${products.length} products from data.json`);
+                console.log(`✅ Загружено ${products.length} товаров из data.json`);
                 return;
             }
         }
     } catch (e) {
-        console.warn('⚠️ Could not load data.json:', e.message);
+        console.warn('⚠️ Не удалось загрузить data.json:', e.message);
     }
     
     const saved = localStorage.getItem('3dshop_products');
@@ -44,19 +44,19 @@ async function loadData() {
             const parsed = JSON.parse(saved);
             if (Array.isArray(parsed) && parsed.length > 0) {
                 products = parsed;
-                console.log(`✅ Loaded ${products.length} products from localStorage`);
+                console.log(`✅ Загружено ${products.length} товаров из localStorage`);
                 return;
             }
         } catch (e) {}
     }
     
-    console.log('🔄 Creating demo data...');
+    console.log('🔄 Создаем демо-данные...');
     products = [
-        { id: 1, name: 'Sci-Fi Rifle', price: 1490, desc: 'High-poly model. FBX, OBJ. 4K textures.', image: 'https://placehold.co/600x400/1a1a22/a78bfa?text=Sci-Fi+Rifle', category: '3d-models' },
-        { id: 2, name: 'Low Poly House', price: 890, desc: 'Optimized for games. 1.2K polygons.', image: 'https://placehold.co/600x400/1a1a22/60a5fa?text=Low+Poly+House', category: '3d-models' },
-        { id: 3, name: 'Metal Roughness 4K', price: 590, desc: 'Metal texture set. Diffuse, Normal, Roughness.', image: 'https://placehold.co/600x400/1a1a22/34d399?text=Metal+Roughness+4K', category: 'textures' },
-        { id: 4, name: 'Brick Wall Texture', price: 390, desc: 'Brick wall. 2K, PBR textures.', image: 'https://placehold.co/600x400/1a1a22/fbbf24?text=Brick+Wall', category: 'textures' },
-        { id: 5, name: 'Architectural Project Cube', price: 3500, desc: 'Complete house project. 3D model, blueprints, visualizations.', image: 'https://placehold.co/600x400/1a1a22/34d399?text=Project+Cube', category: 'projects' }
+        { id: 1, name: 'Sci-Fi Rifle', price: 1490, desc: 'Высокополигональная модель. FBX, OBJ. 4K текстуры.', image: 'https://placehold.co/600x400/1a1a22/a78bfa?text=Sci-Fi+Rifle', category: '3d-models' },
+        { id: 2, name: 'Low Poly House', price: 890, desc: 'Оптимизированная модель для игр. 1.2K полигонов.', image: 'https://placehold.co/600x400/1a1a22/60a5fa?text=Low+Poly+House', category: '3d-models' },
+        { id: 3, name: 'Metal Roughness 4K', price: 590, desc: 'Набор текстур металла. Diffuse, Normal, Roughness.', image: 'https://placehold.co/600x400/1a1a22/34d399?text=Metal+Roughness+4K', category: 'textures' },
+        { id: 4, name: 'Brick Wall Texture', price: 390, desc: 'Кирпичная стена. 2K, PBR-текстуры.', image: 'https://placehold.co/600x400/1a1a22/fbbf24?text=Brick+Wall', category: 'textures' },
+        { id: 5, name: 'Архитектурный проект «Куб»', price: 3500, desc: 'Полный проект дома. 3D-модель, чертежи, визуализации.', image: 'https://placehold.co/600x400/1a1a22/34d399?text=Project+Cube', category: 'projects' }
     ];
     localStorage.setItem('3dshop_products', JSON.stringify(products));
 }
@@ -76,7 +76,7 @@ function saveCart() {
     localStorage.setItem('3dshop_cart', JSON.stringify(cart));
 }
 
-// ====== CATEGORY COUNTS ======
+// ====== ПОДСЧЕТ КАТЕГОРИЙ ======
 function updateCategoryCounts() {
     document.getElementById('allCount').textContent = products.length;
     document.getElementById('modelsCount').textContent = products.filter(p => p.category === '3d-models').length;
@@ -85,7 +85,7 @@ function updateCategoryCounts() {
 }
 
 function getValidImageUrl(url) {
-    if (!url) return 'https://placehold.co/400x200/1a1a22/6b7280?text=No+Image';
+    if (!url) return 'https://placehold.co/400x200/1a1a22/6b7280?text=Нет+изображения';
     if (typeof url === 'string') {
         if (url.startsWith('data:image')) return url;
         if (url.includes('github.com') && !url.includes('raw.githubusercontent.com')) {
@@ -93,10 +93,10 @@ function getValidImageUrl(url) {
         }
         return url;
     }
-    return 'https://placehold.co/400x200/1a1a22/6b7280?text=No+Image';
+    return 'https://placehold.co/400x200/1a1a22/6b7280?text=Нет+изображения';
 }
 
-// ====== RENDER PRODUCTS ======
+// ====== РЕНДЕР ТОВАРОВ ======
 function renderProducts() {
     const grid = document.getElementById('productGrid');
     grid.innerHTML = '';
@@ -107,7 +107,7 @@ function renderProducts() {
     }
     
     if (filtered.length === 0) {
-        grid.innerHTML = `<div class="empty-state"><div class="icon">📭</div><p>No products in this category</p></div>`;
+        grid.innerHTML = `<div class="empty-state"><div class="icon">📭</div><p>Нет товаров в этой категории</p></div>`;
         return;
     }
     
@@ -120,12 +120,12 @@ function renderProducts() {
         card.innerHTML = `
             <span class="category-badge ${catClass}">${catLabel}</span>
             <div class="image-wrapper">
-                <img src="${imgUrl}" alt="${p.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'image-error\\'>🖼️<br><span style=\\'font-size:11px;color:#6b7280;\\'>Not loaded</span></div>'">
+                <img src="${imgUrl}" alt="${p.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'image-error\\'>🖼️<br><span style=\\'font-size:11px;color:#6b7280;\\'>Не загружено</span></div>'">
             </div>
             <h3>${p.name}</h3>
-            <div class="desc">${p.desc || 'No description'}</div>
+            <div class="desc">${p.desc || 'Без описания'}</div>
             <div class="price">${p.price.toLocaleString()} ₽</div>
-            <button class="buy-btn" data-id="${p.id}">Buy</button>
+            <button class="buy-btn" data-id="${p.id}">Купить</button>
         `;
         grid.appendChild(card);
     });
@@ -137,7 +137,7 @@ function renderProducts() {
     });
 }
 
-// ====== CATEGORY TABS ======
+// ====== ВКЛАДКИ ======
 function setupCategoryTabs() {
     document.querySelectorAll('.category-tab').forEach(tab => {
         tab.addEventListener('click', function() {
@@ -149,7 +149,7 @@ function setupCategoryTabs() {
     });
 }
 
-// ====== CART ======
+// ====== КОРЗИНА ======
 function addToCart(id) {
     const product = products.find(p => p.id === id);
     if (!product) return;
@@ -163,10 +163,10 @@ function addToCart(id) {
     updateCartUI();
     const btn = document.querySelector(`.buy-btn[data-id="${id}"]`);
     if (btn) {
-        btn.textContent = '✅ Added!';
+        btn.textContent = '✅ Добавлено!';
         btn.classList.add('added');
         setTimeout(() => {
-            btn.textContent = 'Buy';
+            btn.textContent = 'Купить';
             btn.classList.remove('added');
         }, 1200);
     }
@@ -193,7 +193,7 @@ function updateQuantity(id, delta) {
 
 function clearCart() {
     if (cart.length === 0) return;
-    if (!confirm('Clear cart?')) return;
+    if (!confirm('Очистить корзину?')) return;
     cart = [];
     saveCart();
     updateCartUI();
@@ -213,7 +213,7 @@ function renderCartModal() {
     const container = document.getElementById('cartItems');
     const totalSpan = document.getElementById('cartTotalPrice');
     if (cart.length === 0) {
-        container.innerHTML = '<p style="color: #9ca3af;">Cart is empty</p>';
+        container.innerHTML = '<p style="color: #9ca3af;">Корзина пуста</p>';
         totalSpan.textContent = '0 ₽';
         return;
     }
@@ -243,12 +243,12 @@ function renderCartModal() {
 
 function checkout() {
     if (cart.length === 0) {
-        alert('Cart is empty!');
+        alert('Корзина пуста!');
         return;
     }
     const total = getCartTotal();
     const items = cart.map(i => `- ${i.name} × ${i.quantity}`).join('\n');
-    alert(`💳 Checkout for ${total} ₽\n\nItems:\n${items}`);
+    alert(`💳 Переход к оплате на сумму ${total} ₽\n\nТовары:\n${items}`);
     cart = [];
     saveCart();
     updateCartUI();
@@ -256,9 +256,9 @@ function checkout() {
     document.getElementById('cartModal').classList.remove('active');
 }
 
-// ====== INITIALIZATION ======
+// ====== ИНИЦИАЛИЗАЦИЯ ======
 document.addEventListener('DOMContentLoaded', async function() {
-    console.log(`🚀 Store v${VERSION} loading...`);
+    console.log(`🚀 Витрина v${VERSION} загружается...`);
     await loadData();
     loadCart();
     setupCategoryTabs();
@@ -280,5 +280,5 @@ document.addEventListener('DOMContentLoaded', async function() {
     document.getElementById('clearCartBtn').addEventListener('click', clearCart);
     document.getElementById('checkoutBtn').addEventListener('click', checkout);
     
-    console.log(`✅ Store v${VERSION} loaded. Products: ${products.length}`);
+    console.log(`✅ Витрина v${VERSION} загружена. Товаров: ${products.length}`);
 });

@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Sci-Fi Rifle",
         "price": 1490,
-        "desc": "High-poly model. FBX, OBJ. 4K textures.",
+        "desc": "Высокополигональная модель. FBX, OBJ. 4K текстуры.",
         "image": "https://placehold.co/600x400/1a1a22/a78bfa?text=Sci-Fi+Rifle",
         "category": "3d-models"
     },
@@ -11,7 +11,7 @@
         "id": 2,
         "name": "Low Poly House",
         "price": 890,
-        "desc": "Optimized for games. 1.2K polygons.",
+        "desc": "Оптимизированная модель для игр. 1.2K полигонов.",
         "image": "https://placehold.co/600x400/1a1a22/60a5fa?text=Low+Poly+House",
         "category": "3d-models"
     },
@@ -19,7 +19,7 @@
         "id": 3,
         "name": "Metal Roughness 4K",
         "price": 590,
-        "desc": "Metal texture set. Diffuse, Normal, Roughness.",
+        "desc": "Набор текстур металла. Diffuse, Normal, Roughness.",
         "image": "https://placehold.co/600x400/1a1a22/34d399?text=Metal+Roughness+4K",
         "category": "textures"
     },
@@ -27,15 +27,15 @@
         "id": 4,
         "name": "Brick Wall Texture",
         "price": 390,
-        "desc": "Brick wall. 2K, PBR textures.",
+        "desc": "Кирпичная стена. 2K, PBR-текстуры.",
         "image": "https://placehold.co/600x400/1a1a22/fbbf24?text=Brick+Wall",
         "category": "textures"
     },
     {
         "id": 5,
-        "name": "Architectural Project Cube",
+        "name": "Архитектурный проект «Куб»",
         "price": 3500,
-        "desc": "Complete house project. 3D model, blueprints, visualizations.",
+        "desc": "Полный проект дома. 3D-модель, чертежи, визуализации.",
         "image": "https://placehold.co/600x400/1a1a22/34d399?text=Project+Cube",
         "category": "projects"
     }
