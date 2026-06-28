@@ -1,5 +1,5 @@
 // ====== ВЕРСИЯ ======
-const VERSION = '3.1.0';
+const VERSION = '3.1.1';
 
 // ====== КАТЕГОРИИ ======
 const CATEGORY_LABELS = {
@@ -18,7 +18,6 @@ const CATEGORY_ICONS = {
 let products = [];
 let cart = [];
 let currentCategory = 'all';
-let debugVisible = true;
 
 // ====== ЗАГРУЗКА ДАННЫХ ИЗ data.json ======
 async function loadData() {
@@ -75,29 +74,6 @@ function loadCart() {
 
 function saveCart() {
     localStorage.setItem('3dshop_cart', JSON.stringify(cart));
-}
-
-// ====== ОТЛАДКА ======
-function updateDebug() {
-    document.getElementById('debugCount').textContent = products.length;
-    document.getElementById('debugKey').textContent = 'data.json';
-    const statusEl = document.getElementById('debugStatus');
-    statusEl.textContent = products.length > 0 ? `✅ ${products.length} товаров` : '❌ Нет товаров';
-    statusEl.className = products.length > 0 ? 'value green' : 'value red';
-}
-
-function toggleDebug() {
-    const content = document.getElementById('debugContent');
-    debugVisible = !debugVisible;
-    content.style.display = debugVisible ? 'flex' : 'none';
-    document.getElementById('debugToggle').textContent = debugVisible ? 'Скрыть' : 'Показать';
-}
-
-function resetData() {
-    if (!confirm('Удалить все данные?')) return;
-    localStorage.removeItem('3dshop_products');
-    localStorage.removeItem('3dshop_cart');
-    location.reload();
 }
 
 // ====== ПОДСЧЕТ КАТЕГОРИЙ ======
@@ -289,7 +265,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     renderProducts();
     updateCategoryCounts();
     updateCartUI();
-    updateDebug();
     
     const modal = document.getElementById('cartModal');
     document.getElementById('openCartBtn').addEventListener('click', function() {
@@ -304,9 +279,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     });
     document.getElementById('clearCartBtn').addEventListener('click', clearCart);
     document.getElementById('checkoutBtn').addEventListener('click', checkout);
-    document.getElementById('debugToggle').addEventListener('click', toggleDebug);
-    document.getElementById('debugRefreshBtn').addEventListener('click', () => location.reload());
-    document.getElementById('debugResetBtn').addEventListener('click', resetData);
     
     console.log(`✅ Витрина v${VERSION} загружена. Товаров: ${products.length}`);
 });
