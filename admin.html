@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель 3D Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: #0b0b0e;
+            color: #eaeaea;
+            min-height: 100vh;
+            padding: 30px 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Шапка админки */
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #2a2a30;
+            margin-bottom: 40px;
+        }
+
+        .admin-header h1 {
+            font-size: 24px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .admin-header .back-link {
+            color: #6b7280;
+            text-decoration: none;
+            padding: 8px 20px;
+            border: 1px solid #2a2a30;
+            border-radius: 30px;
+            transition: 0.2s;
+        }
+
+        .admin-header .back-link:hover {
+            border-color: #a78bfa;
+            color: #a78bfa;
+        }
+
+        /* Парольный экран */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .login-overlay.hidden {
+            display: none;
+        }
+
+        .login-box {
+            background: #1a1a22;
+            padding: 40px 48px;
+            border-radius: 24px;
+            border: 1px solid #33333e;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .login-box h2 {
+            margin-bottom: 8px;
+        }
+
+        .login-box p {
+            color: #9ca3af;
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 14px 18px;
+            background: #1e1e26;
+            border: 1px solid #33333e;
+            border-radius: 12px;
+            color: #eaeaea;
+            font-size: 16px;
+            margin-bottom: 14px;
+            outline: none;
+        }
+
+        .login-box input:focus {
+            border-color: #a78bfa;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 14px;
+            background: #a78bfa;
+            border: none;
+            border-radius: 40px;
+            color: #0b0b0e;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .login-box button:hover {
+            background: #c4b5fd;
+        }
+
+        .login-error {
+            color: #f87171;
+            font-size: 14px;
+            margin-top: 12px;
+            display: none;
+        }
+
+        /* Форма добавления товара */
+        .admin-section {
+            background: #121218;
+            border-radius: 24px;
+            border: 1px solid #282830;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .admin-section h2 {
+            font-size: 20px;
+            color: #fbbf24;
+            margin-bottom: 20px;
+        }
+
+        .admin-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .admin-form .full-width {
+            grid-column: span 2;
+        }
+
+        .admin-form label {
+            font-size: 13px;
+            color: #9ca3af;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .admin-form input,
+        .admin-form textarea {
+            background: #1e1e26;
+            border: 1px solid #33333e;
+            color: #eaeaea;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            width: 100%;
+        }
+
+        .admin-form input:focus,
+        .admin-form textarea:focus {
+            border-color: #a78bfa;
+        }
+
+        .admin-form textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .admin-form .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .admin-form .file-input-wrapper input[type="file"] {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+        }
+
+        .admin-form .file-input-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #1e1e26;
+            border: 2px dashed #33333e;
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #9ca3af;
+            font-size: 14px;
+            width: 100%;
+            min-height: 52px;
+        }
+
+        .admin-form .file-input-label:hover {
+            border-color: #a78bfa;
+            color: #eaeaea;
+        }
+
+        .admin-form .file-input-label .file-name {
+            color: #a78bfa;
+            font-weight: 600;
+        }
+
+        .admin-form .preview-container {
+            grid-column: span 2;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+            padding: 12px;
+            background: #0f0f14;
+            border-radius: 12px;
+            min-height: 60px;
+        }
+
+        .admin-form .preview-container img {
+            max-height: 120px;
+            max-width: 200px;
+            border-radius: 10px;
+            border: 1px solid #2a2a32;
+        }
+
+        .admin-form .preview-container .no-image {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .admin-form .submit-btn {
+            background: #fbbf24;
+            border: none;
+            color: #0b0b0e;
+            font-weight: 700;
+            padding: 14px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 17px;
+            transition: 0.2s;
+            grid-column: span 2;
+        }
+
+        .admin-form .submit-btn:hover {
+            background: #fcd34d;
+            transform: scale(1.01);
+        }
+
+        /* Список товаров */
+        .products-list {
+            background: #121218;
+            border-radius: 24px;
+            border: 1px solid #282830;
+            padding: 30px;
+        }
+
+        .products-list h2 {
+            font-size: 20px;
+            color: #a78bfa;
+            margin-bottom: 20px;
+        }
+
+        .product-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 16px;
+            background: #1a1a22;
+            border-radius: 14px;
+            margin-bottom: 10px;
+            border: 1px solid #24242b;
+            transition: 0.2s;
+        }
+
+        .product-row:hover {
+            border-color: #3f3f4a;
+        }
+
+        .product-row .thumb {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #1f1f26;
+            flex-shrink: 0;
+        }
+
+        .product-row .info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .product-row .info .name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .product-row .info .desc {
+            color: #9ca3af;
+            font-size: 13px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .product-row .info .price {
+            color: #a78bfa;
+            font-weight: 700;
+        }
+
+        .product-row .actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .product-row .actions button {
+            padding: 6px 16px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .product-row .actions .delete-btn {
+            background: #3d1f2a;
+            color: #f87171;
+        }
+
+        .product-row .actions .delete-btn:hover {
+            background: #5c2a3a;
+        }
+
+        .empty-products {
+            color: #6b7280;
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        @media (max-width: 640px) {
+            .admin-form {
+                grid-template-columns: 1fr;
+            }
+            .admin-form .full-width,
+            .admin-form .preview-container,
+            .admin-form .submit-btn {
+                grid-column: span 1;
+            }
+            .product-row {
+                flex-wrap: wrap;
+            }
+            .product-row .actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            .login-box {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ПАРОЛЬНЫЙ ЭКРАН -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box">
+            <h2>🔐 Доступ к админке</h2>
+            <p>Введите пароль для управления товарами</p>
+            <input type="password" id="adminPassword" placeholder="Введите пароль" autofocus>
+            <button id="loginBtn">Войти</button>
+            <div class="login-error" id="loginError">❌ Неверный пароль</div>
+        </div>
+    </div>
+
+    <!-- ОСНОВНОЕ СОДЕРЖИМОЕ АДМИНКИ -->
+    <div class="container" id="adminContent" style="display: none;">
+        <!-- Шапка -->
+        <div class="admin-header">
+            <h1>⚙️ Админ-панель</h1>
+            <div style="display: flex; gap: 12px;">
+                <a href="index.html" class="back-link">← На витрину</a>
+                <button id="logoutBtn" class="back-link" style="background: #1e1e26; cursor: pointer;">Выйти</button>
+            </div>
+        </div>
+
+        <!-- Форма добавления -->
+        <div class="admin-section">
+            <h2>➕ Добавить новую модель</h2>
+            <form id="addProductForm" class="admin-form">
+                <div>
+                    <label for="productName">Название модели *</label>
+                    <input type="text" id="productName" placeholder="Например: Sci-Fi Rifle" required>
+                </div>
+                <div>
+                    <label for="productPrice">Цена (₽) *</label>
+                    <input type="number" id="productPrice" placeholder="1490" min="1" required>
+                </div>
+                <div class="full-width">
+                    <label for="productDesc">Описание</label>
+                    <textarea id="productDesc" placeholder="Полигоны, форматы, текстуры, особенности..."></textarea>
+                </div>
+                <div class="file-input-wrapper full-width">
+                    <label for="fileInput" class="file-input-label">
+                        📤 Нажмите, чтобы выбрать изображение
+                        <span class="file-name" id="fileName">файл не выбран</span>
+                    </label>
+                    <input type="file" id="fileInput" accept="image/*">
+                </div>
+                <div class="preview-container full-width" id="previewContainer">
+                    <span class="no-image">🖼️ Предпросмотр появится здесь</span>
+                </div>
+                <button type="submit" class="submit-btn">➕ Добавить товар</button>
+            </form>
+        </div>
+
+        <!-- Список товаров -->
+        <div class="products-list">
+            <h2>📦 Все товары</h2>
+            <div id="productsListContainer">
+                <!-- Список рендерится через JS -->
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
