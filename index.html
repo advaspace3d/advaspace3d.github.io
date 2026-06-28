@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Модели — Купить</title>
+    <title>3D Shop — Модели и Текстуры</title>
     <style>
         * {
             margin: 0;
@@ -24,13 +24,16 @@
             margin: 0 auto;
         }
 
+        /* Шапка */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
             padding: 16px 0;
             border-bottom: 1px solid #2a2a30;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .logo {
@@ -45,6 +48,7 @@
             display: flex;
             gap: 12px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .admin-link {
@@ -93,27 +97,72 @@
             font-weight: 700;
         }
 
+        /* Герой */
         .hero {
             text-align: center;
-            padding: 40px 0 50px;
+            padding: 30px 0 40px;
         }
 
         .hero h1 {
-            font-size: 42px;
+            font-size: 38px;
             font-weight: 800;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .hero p {
             color: #9ca3af;
-            font-size: 18px;
+            font-size: 17px;
         }
 
+        /* Вкладки категорий */
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #1a1a22;
+            padding-bottom: 14px;
+        }
+
+        .category-tab {
+            padding: 10px 28px;
+            border: none;
+            border-radius: 30px;
+            background: #1a1a22;
+            color: #9ca3af;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: 0.25s;
+        }
+
+        .category-tab:hover {
+            background: #2a2a32;
+            color: #eaeaea;
+        }
+
+        .category-tab.active {
+            background: #a78bfa;
+            color: #0b0b0e;
+        }
+
+        .category-tab .count {
+            background: rgba(255,255,255,0.15);
+            padding: 1px 10px;
+            border-radius: 30px;
+            font-size: 12px;
+            margin-left: 6px;
+        }
+
+        .category-tab.active .count {
+            background: rgba(0,0,0,0.2);
+        }
+
+        /* Сетка товаров */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 28px;
-            margin-top: 30px;
+            margin-top: 10px;
         }
 
         .product-card {
@@ -129,6 +178,23 @@
             transform: translateY(-6px);
             border-color: #4b4b5a;
             box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+        }
+
+        .product-card .category-badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 600;
+            background: #2a1f3d;
+            color: #a78bfa;
+        }
+
+        .product-card .category-badge.texture {
+            background: #1f2a3d;
+            color: #60a5fa;
         }
 
         .product-card img {
@@ -176,6 +242,24 @@
             transform: scale(1.02);
         }
 
+        .buy-btn.added {
+            background: #34d399;
+        }
+
+        /* Пустое состояние */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: #6b7280;
+        }
+
+        .empty-state .icon {
+            font-size: 60px;
+            margin-bottom: 16px;
+        }
+
+        /* Модалка корзины */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -225,9 +309,43 @@
             font-weight: 600;
         }
 
+        .cart-item-category {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
         .cart-item-price {
             color: #a78bfa;
             font-size: 14px;
+        }
+
+        .cart-item-qty {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-item-qty button {
+            background: #2a2a32;
+            border: none;
+            color: #eaeaea;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .cart-item-qty button:hover {
+            background: #3f3f48;
+        }
+
+        .cart-item-qty .qty-num {
+            font-weight: 600;
+            min-width: 20px;
+            text-align: center;
         }
 
         .remove-item {
@@ -276,30 +394,42 @@
             cursor: pointer;
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #6b7280;
+        .clear-cart-btn {
+            background: none;
+            border: none;
+            color: #f87171;
+            font-size: 13px;
+            cursor: pointer;
+            padding: 4px 0;
+            margin-bottom: 10px;
         }
 
-        .empty-state svg {
-            font-size: 60px;
-            margin-bottom: 16px;
+        .clear-cart-btn:hover {
+            text-decoration: underline;
         }
 
+        /* Адаптив */
         @media (max-width: 640px) {
             .hero h1 { font-size: 28px; }
-            .header { flex-wrap: wrap; gap: 12px; }
-            .header-actions { width: 100%; justify-content: flex-end; }
+            .header { flex-direction: column; align-items: stretch; }
+            .header-actions { justify-content: flex-end; }
+            .category-tabs { overflow-x: auto; flex-wrap: nowrap; }
+            .category-tab { white-space: nowrap; padding: 8px 18px; font-size: 13px; }
+            .product-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+        }
+
+        @media (max-width: 440px) {
+            .product-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Шапка -->
         <header class="header">
             <div class="logo">✦ 3D Shop</div>
             <div class="header-actions">
-                <a href="admin.html" class="admin-link">⚙️ Админка</a>
+                <a href="admin.html" class="admin-link">⚙️ Админка v1.2.1</a>
                 <button class="cart-btn" id="openCartBtn">
                     🛒 Корзина
                     <span class="cart-count" id="cartCount">0</span>
@@ -307,20 +437,39 @@
             </div>
         </header>
 
+        <!-- Герой -->
         <section class="hero">
-            <h1>Качественные 3D модели</h1>
-            <p>Скачивайте сразу после покупки. Высокое качество, низкие цены.</p>
+            <h1>3D модели и текстуры</h1>
+            <p>Скачивайте сразу после покупки. Высокое качество.</p>
         </section>
 
+        <!-- Вкладки категорий -->
+        <div class="category-tabs" id="categoryTabs">
+            <button class="category-tab active" data-category="all">
+                🎯 Все
+                <span class="count" id="allCount">0</span>
+            </button>
+            <button class="category-tab" data-category="3d-models">
+                🎲 3D-модели
+                <span class="count" id="modelsCount">0</span>
+            </button>
+            <button class="category-tab" data-category="textures">
+                🎨 Текстуры
+                <span class="count" id="texturesCount">0</span>
+            </button>
+        </div>
+
+        <!-- Сетка товаров -->
         <div class="product-grid" id="productGrid">
-            <!-- Товары загружаются из localStorage -->
+            <!-- Товары загружаются через JavaScript -->
         </div>
 
         <!-- Модалка корзины -->
         <div class="modal-overlay" id="cartModal">
             <div class="modal">
                 <button class="close-modal" id="closeCartBtn">✕</button>
-                <h2>🛒 Ваша корзина</h2>
+                <h2>🛒 Корзина</h2>
+                <button class="clear-cart-btn" id="clearCartBtn">🗑️ Очистить корзину</button>
                 <div id="cartItems">
                     <p style="color: #9ca3af;">Корзина пуста</p>
                 </div>
@@ -328,7 +477,7 @@
                     <span>Итого</span>
                     <span id="cartTotalPrice">0 ₽</span>
                 </div>
-                <button class="checkout-btn" id="checkoutBtn">Оплатить сейчас</button>
+                <button class="checkout-btn" id="checkoutBtn">💳 Оплатить</button>
             </div>
         </div>
     </div>
