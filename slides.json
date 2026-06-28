@@ -1,26 +1,34 @@
 [
-    {
-        "id": 1,
-        "image": "https://placehold.co/1200x400/2a1f3d/a78bfa?text=Слайд+1",
-        "title": "Новые 3D модели",
-        "subtitle": "Высокое качество, низкие цены",
-        "link": "#",
-        "active": true
-    },
-    {
-        "id": 2,
-        "image": "https://placehold.co/1200x400/1f2a3d/60a5fa?text=Слайд+2",
-        "title": "Текстуры 4K",
-        "subtitle": "Для профессиональной визуализации",
-        "link": "#",
-        "active": true
-    },
-    {
-        "id": 3,
-        "image": "https://placehold.co/1200x400/1a2d2a/34d399?text=Слайд+3",
-        "title": "Готовые проекты",
-        "subtitle": "Скачивайте и используйте",
-        "link": "#",
-        "active": true
-    }
+  {
+    "id": 1,
+    "image": "https://placehold.co/1200x400/2a1f3d/a78bfa?text=Ð¡Ð»Ð°Ð¹Ð´+1",
+    "title": "ÐÐ¾Ð²ÑÐµ 3D Ð¼Ð¾Ð´ÐµÐ»Ð¸",
+    "subtitle": "ÐÑÑÐ¾ÐºÐ¾Ðµ ÐºÐ°ÑÐµÑÑÐ²Ð¾, Ð½Ð¸Ð·ÐºÐ¸Ðµ ÑÐµÐ½Ñ",
+    "link": "#",
+    "active": true
+  },
+  {
+    "id": 2,
+    "image": "https://placehold.co/1200x400/1f2a3d/60a5fa?text=Ð¡Ð»Ð°Ð¹Ð´+2",
+    "title": "Ð¢ÐµÐºÑÑÑÑÑ 4K",
+    "subtitle": "ÐÐ»Ñ Ð¿ÑÐ¾ÑÐµÑÑÐ¸Ð¾Ð½Ð°Ð»ÑÐ½Ð¾Ð¹ Ð²Ð¸Ð·ÑÐ°Ð»Ð¸Ð·Ð°ÑÐ¸Ð¸",
+    "link": "#",
+    "active": true
+  },
+  {
+    "id": 3,
+    "image": "https://placehold.co/1200x400/1a2d2a/34d399?text=Ð¡Ð»Ð°Ð¹Ð´+3",
+    "title": "ÐÐ¾ÑÐ¾Ð²ÑÐµ Ð¿ÑÐ¾ÐµÐºÑÑ",
+    "subtitle": "Ð¡ÐºÐ°ÑÐ¸Ð²Ð°Ð¹ÑÐµ Ð¸ Ð¸ÑÐ¿Ð¾Ð»ÑÐ·ÑÐ¹ÑÐµ",
+    "link": "#",
+    "active": true
+  },
+  {
+    "id": 1782672069532,
+    "image": "https://raw.githubusercontent.com/advaspace3d/advaspace3d.github.io/main/uploads/slides/1782672068126-слайд.jpg",
+    "title": "Слайд",
+    "subtitle": "",
+    "link": "#",
+    "active": true
+  }
 ]
