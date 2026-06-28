@@ -1,5 +1,5 @@
 // ====== ВЕРСИЯ ======
-const VERSION = '3.2.1';
+const VERSION = '3.3.0';
 
 // ====== КАТЕГОРИИ ======
 const CATEGORY_LABELS = {
@@ -18,11 +18,15 @@ const CATEGORY_ICONS = {
 let products = [];
 let cart = [];
 let currentCategory = 'all';
+let slides = [];
+let currentSlide = 0;
+let slideInterval = null;
 
-// ====== ЗАГРУЗКА ДАННЫХ ИЗ data.json ======
+// ====== ЗАГРУЗКА ДАННЫХ ======
 async function loadData() {
     console.log(`🔍 [${VERSION}] Загрузка данных...`);
     
+    // Загружаем товары
     try {
         const response = await fetch('data.json?t=' + Date.now());
         if (response.ok) {
@@ -31,34 +35,57 @@ async function loadData() {
                 products = data;
                 localStorage.setItem('3dshop_products', JSON.stringify(products));
                 console.log(`✅ Загружено ${products.length} товаров из data.json`);
-                return;
             }
         }
     } catch (e) {
         console.warn('⚠️ Не удалось загрузить data.json:', e.message);
     }
     
-    const saved = localStorage.getItem('3dshop_products');
-    if (saved) {
-        try {
-            const parsed = JSON.parse(saved);
-            if (Array.isArray(parsed) && parsed.length > 0) {
-                products = parsed;
-                console.log(`✅ Загружено ${products.length} товаров из localStorage`);
-                return;
-            }
-        } catch (e) {}
+    if (products.length === 0) {
+        const saved = localStorage.getItem('3dshop_products');
+        if (saved) {
+            try {
+                const parsed = JSON.parse(saved);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                    products = parsed;
+                    console.log(`✅ Загружено ${products.length} товаров из localStorage`);
+                }
+            } catch (e) {}
+        }
     }
     
-    console.log('🔄 Создаем демо-данные...');
-    products = [
-        { id: 1, name: 'Sci-Fi Rifle', price: 1490, desc: 'Высокополигональная модель. FBX, OBJ. 4K текстуры.', image: 'https://placehold.co/600x400/1a1a22/a78bfa?text=Sci-Fi+Rifle', category: '3d-models' },
-        { id: 2, name: 'Low Poly House', price: 890, desc: 'Оптимизированная модель для игр. 1.2K полигонов.', image: 'https://placehold.co/600x400/1a1a22/60a5fa?text=Low+Poly+House', category: '3d-models' },
-        { id: 3, name: 'Metal Roughness 4K', price: 590, desc: 'Набор текстур металла. Diffuse, Normal, Roughness.', image: 'https://placehold.co/600x400/1a1a22/34d399?text=Metal+Roughness+4K', category: 'textures' },
-        { id: 4, name: 'Brick Wall Texture', price: 390, desc: 'Кирпичная стена. 2K, PBR-текстуры.', image: 'https://placehold.co/600x400/1a1a22/fbbf24?text=Brick+Wall', category: 'textures' },
-        { id: 5, name: 'Архитектурный проект «Куб»', price: 3500, desc: 'Полный проект дома. 3D-модель, чертежи, визуализации.', image: 'https://placehold.co/600x400/1a1a22/34d399?text=Project+Cube', category: 'projects' }
-    ];
-    localStorage.setItem('3dshop_products', JSON.stringify(products));
+    if (products.length === 0) {
+        console.log('🔄 Создаем демо-данные...');
+        products = [
+            { id: 1, name: 'Sci-Fi Rifle', price: 1490, desc: 'Высокополигональная модель. FBX, OBJ. 4K текстуры.', image: 'https://placehold.co/600x400/1a1a22/a78bfa?text=Sci-Fi+Rifle', category: '3d-models' },
+            { id: 2, name: 'Low Poly House', price: 890, desc: 'Оптимизированная модель для игр. 1.2K полигонов.', image: 'https://placehold.co/600x400/1a1a22/60a5fa?text=Low+Poly+House', category: '3d-models' },
+            { id: 3, name: 'Metal Roughness 4K', price: 590, desc: 'Набор текстур металла. Diffuse, Normal, Roughness.', image: 'https://placehold.co/600x400/1a1a22/34d399?text=Metal+Roughness+4K', category: 'textures' },
+            { id: 4, name: 'Brick Wall Texture', price: 390, desc: 'Кирпичная стена. 2K, PBR-текстуры.', image: 'https://placehold.co/600x400/1a1a22/fbbf24?text=Brick+Wall', category: 'textures' },
+            { id: 5, name: 'Архитектурный проект «Куб»', price: 3500, desc: 'Полный проект дома. 3D-модель, чертежи, визуализации.', image: 'https://placehold.co/600x400/1a1a22/34d399?text=Project+Cube', category: 'projects' }
+        ];
+        localStorage.setItem('3dshop_products', JSON.stringify(products));
+    }
+    
+    // Загружаем слайды
+    try {
+        const slideResponse = await fetch('slides.json?t=' + Date.now());
+        if (slideResponse.ok) {
+            const slideData = await slideResponse.json();
+            if (Array.isArray(slideData) && slideData.length > 0) {
+                slides = slideData.filter(s => s.active !== false);
+                console.log(`✅ Загружено ${slides.length} слайдов из slides.json`);
+            }
+        }
+    } catch (e) {
+        console.warn('⚠️ Не удалось загрузить slides.json:', e.message);
+    }
+    
+    if (slides.length === 0) {
+        slides = [
+            { id: 1, image: 'https://placehold.co/1200x400/2a1f3d/a78bfa?text=Добро+пожаловать!', title: '3D модели, текстуры и проекты', subtitle: 'Высокое качество, низкие цены', link: '#', active: true },
+            { id: 2, image: 'https://placehold.co/1200x400/1f2a3d/60a5fa?text=Новые+поступления', title: 'Свежие коллекции', subtitle: 'Обновления каждый день', link: '#', active: true }
+        ];
+    }
 }
 
 function saveProducts() {
@@ -74,6 +101,86 @@ function loadCart() {
 
 function saveCart() {
     localStorage.setItem('3dshop_cart', JSON.stringify(cart));
+}
+
+// ====== СЛАЙД-БАР ======
+function renderSlider() {
+    const track = document.getElementById('sliderTrack');
+    const dots = document.getElementById('sliderDots');
+    const container = document.getElementById('sliderContainer');
+    
+    if (!slides || slides.length === 0) {
+        container.classList.remove('active');
+        return;
+    }
+    
+    container.classList.add('active');
+    
+    track.innerHTML = slides.map(s => `
+        <div class="slider-slide">
+            <img src="${s.image}" alt="${s.title}" onerror="this.src='https://placehold.co/1200x400/1a1a22/6b7280?text=Slide+${s.id}'">
+            <div class="slide-content">
+                <h2>${s.title || ''}</h2>
+                <p>${s.subtitle || ''}</p>
+                ${s.link && s.link !== '#' ? `<a href="${s.link}" class="slide-link">Подробнее →</a>` : ''}
+            </div>
+        </div>
+    `).join('');
+    
+    dots.innerHTML = slides.map((_, i) => `
+        <button class="dot ${i === 0 ? 'active' : ''}" data-index="${i}"></button>
+    `).join('');
+    
+    dots.querySelectorAll('.dot').forEach(dot => {
+        dot.addEventListener('click', function() {
+            goToSlide(parseInt(this.dataset.index));
+        });
+    });
+    
+    currentSlide = 0;
+    updateSlider();
+    startAutoSlide();
+}
+
+function updateSlider() {
+    const track = document.getElementById('sliderTrack');
+    const dots = document.querySelectorAll('.dot');
+    track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentSlide);
+    });
+}
+
+function goToSlide(index) {
+    if (index < 0) index = slides.length - 1;
+    if (index >= slides.length) index = 0;
+    currentSlide = index;
+    updateSlider();
+    resetAutoSlide();
+}
+
+function nextSlide() {
+    goToSlide(currentSlide + 1);
+}
+
+function prevSlide() {
+    goToSlide(currentSlide - 1);
+}
+
+function startAutoSlide() {
+    if (slideInterval) clearInterval(slideInterval);
+    if (slides.length > 1) {
+        slideInterval = setInterval(nextSlide, 5000);
+    }
+}
+
+function resetAutoSlide() {
+    if (slideInterval) {
+        clearInterval(slideInterval);
+        if (slides.length > 1) {
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+    }
 }
 
 // ====== ПОДСЧЕТ КАТЕГОРИЙ ======
@@ -104,6 +211,17 @@ function renderProducts() {
     let filtered = products;
     if (currentCategory !== 'all') {
         filtered = products.filter(p => p.category === currentCategory);
+    }
+    
+    // Показываем/скрываем слайдер
+    const slider = document.getElementById('sliderContainer');
+    if (currentCategory === 'all') {
+        slider.classList.add('active');
+        if (slides.length === 0) {
+            renderSlider();
+        }
+    } else {
+        slider.classList.remove('active');
     }
     
     if (filtered.length === 0) {
@@ -261,10 +379,15 @@ document.addEventListener('DOMContentLoaded', async function() {
     console.log(`🚀 Витрина v${VERSION} загружается...`);
     await loadData();
     loadCart();
+    renderSlider();
     setupCategoryTabs();
     renderProducts();
     updateCategoryCounts();
     updateCartUI();
+    
+    // Кнопки слайдера
+    document.getElementById('sliderPrev').addEventListener('click', prevSlide);
+    document.getElementById('sliderNext').addEventListener('click', nextSlide);
     
     const modal = document.getElementById('cartModal');
     document.getElementById('openCartBtn').addEventListener('click', function() {
@@ -280,5 +403,5 @@ document.addEventListener('DOMContentLoaded', async function() {
     document.getElementById('clearCartBtn').addEventListener('click', clearCart);
     document.getElementById('checkoutBtn').addEventListener('click', checkout);
     
-    console.log(`✅ Витрина v${VERSION} загружена. Товаров: ${products.length}`);
+    console.log(`✅ Витрина v${VERSION} загружена. Товаров: ${products.length}, Слайдов: ${slides.length}`);
 });
