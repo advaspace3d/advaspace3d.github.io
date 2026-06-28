@@ -15,14 +15,7 @@
     "image": "https://placehold.co/600x400/1a1a22/60a5fa?text=Low+Poly+House",
     "category": "3d-models"
   },
-  {
-    "id": 3,
-    "name": "Metal Roughness 4K",
-    "price": 590,
-    "desc": "ÃÂÃÂ°ÃÂ±ÃÂ¾ÃÂ ÃÂÃÂµÃÂºÃÂÃÂÃÂÃÂ ÃÂ¼ÃÂµÃÂÃÂ°ÃÂ»ÃÂ»ÃÂ°. Diffuse, Normal, Roughness.",
-    "image": "https://placehold.co/600x400/1a1a22/34d399?text=Metal+Roughness+4K",
-    "category": "textures"
-  },
+ 
   {
     "id": 4,
     "name": "Brick Wall Texture",
