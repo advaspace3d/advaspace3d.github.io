@@ -1,5 +1,5 @@
 // ====== ВЕРСИЯ ======
-const VERSION = '3.2.0';
+const VERSION = '3.2.1';
 
 // ====== КАТЕГОРИИ ======
 const CATEGORY_LABELS = {

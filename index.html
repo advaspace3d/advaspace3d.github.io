@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Shop — Модели, Текстуры, Проекты v3.2.0</title>
+    <title>3D Shop — Модели, Текстуры, Проекты v3.2.1</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, sans-serif; }
         body { background: #0b0b0e; color: #eaeaea; padding: 30px 20px; }
@@ -72,16 +72,19 @@
         /* ===== ГЕРОЙ (ОПИСАНИЕ) ===== */
         .hero {
             text-align: center;
-            padding: 20px 0 35px;
+            padding: 0 0 35px 0;
         }
         .hero h1 {
-            font-size: 36px;
+            font-size: 32px;
             font-weight: 800;
             margin-bottom: 6px;
+            background: linear-gradient(135deg, #eaeaea, #9ca3af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .hero p {
-            color: #9ca3af;
-            font-size: 17px;
+            color: #6b7280;
+            font-size: 16px;
         }
 
         /* ===== ВКЛАДКИ КАТЕГОРИЙ ===== */
@@ -319,7 +322,6 @@
 
         /* ===== АДАПТИВ ===== */
         @media (max-width: 640px) {
-            .hero h1 { font-size: 28px; }
             .header {
                 flex-direction: column;
                 align-items: stretch;
@@ -327,6 +329,7 @@
             }
             .logo { font-size: 28px; text-align: center; }
             .header-actions { justify-content: center; }
+            .hero h1 { font-size: 24px; }
             .category-tabs {
                 overflow-x: auto;
                 flex-wrap: nowrap;
@@ -352,7 +355,7 @@
         <header class="header">
             <div class="logo">
                 ✦ 3D Shop
-                <span class="version">v3.2.0</span>
+                <span class="version">v3.2.1</span>
             </div>
             <div class="header-actions">
                 <button class="cart-btn" id="openCartBtn">
@@ -362,7 +365,7 @@
             </div>
         </header>
 
-        <!-- ===== ГЕРОЙ (ОПИСАНИЕ) ===== -->
+        <!-- ===== ГЕРОЙ (ОПИСАНИЕ) — ПОДНЯТ НА УРОВЕНЬ КОРЗИНЫ ===== -->
         <section class="hero">
             <h1>3D модели, текстуры и проекты</h1>
             <p>Скачивайте сразу после покупки. Высокое качество.</p>
