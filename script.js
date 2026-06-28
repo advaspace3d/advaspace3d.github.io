@@ -1,5 +1,5 @@
 // ====== ВЕРСИЯ ======
-const VERSION = '3.3.0';
+const VERSION = '3.4.0';
 
 // ====== КАТЕГОРИИ ======
 const CATEGORY_LABELS = {
@@ -33,8 +33,11 @@ async function loadData() {
             const data = await response.json();
             if (Array.isArray(data) && data.length > 0) {
                 products = data;
+                // СОРТИРОВКА: сначала новые (по id — чем больше id, тем новее)
+                products.sort((a, b) => b.id - a.id);
                 localStorage.setItem('3dshop_products', JSON.stringify(products));
-                console.log(`✅ Загружено ${products.length} товаров из data.json`);
+                console.log(`✅ Загружено ${products.length} товаров из data.json (отсортированы: новые сначала)`);
+                console.log(`📌 Самый новый товар: ${products[0]?.name} (id: ${products[0]?.id})`);
             }
         }
     } catch (e) {
@@ -48,7 +51,8 @@ async function loadData() {
                 const parsed = JSON.parse(saved);
                 if (Array.isArray(parsed) && parsed.length > 0) {
                     products = parsed;
-                    console.log(`✅ Загружено ${products.length} товаров из localStorage`);
+                    products.sort((a, b) => b.id - a.id);
+                    console.log(`✅ Загружено ${products.length} товаров из localStorage (отсортированы)`);
                 }
             } catch (e) {}
         }
@@ -212,6 +216,9 @@ function renderProducts() {
     if (currentCategory !== 'all') {
         filtered = products.filter(p => p.category === currentCategory);
     }
+    
+    // Сортировка: сначала новые (по id — чем больше id, тем новее)
+    filtered.sort((a, b) => b.id - a.id);
     
     // Показываем/скрываем слайдер
     const slider = document.getElementById('sliderContainer');
@@ -404,4 +411,5 @@ document.addEventListener('DOMContentLoaded', async function() {
     document.getElementById('checkoutBtn').addEventListener('click', checkout);
     
     console.log(`✅ Витрина v${VERSION} загружена. Товаров: ${products.length}, Слайдов: ${slides.length}`);
+    console.log(`📌 Товары отсортированы: новые сначала (самый новый: ${products[0]?.name})`);
 });

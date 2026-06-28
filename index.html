@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D модели, текстуры и проекты v3.3.0</title>
+    <title>3D модели, текстуры и проекты v3.4.0</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, sans-serif; }
         body { background: #0b0b0e; color: #eaeaea; padding: 30px 20px; }
@@ -47,7 +47,6 @@
             border: none;
             color: #fff;
             padding: 10px 22px;
-            border-radius: 30px;
             font-size: 16px;
             cursor: pointer;
             transition: 0.3s;
@@ -59,7 +58,6 @@
         .cart-count {
             background: #a78bfa;
             color: #0b0b0e;
-            border-radius: 50%;
             width: 24px;
             height: 24px;
             display: flex;
@@ -74,7 +72,6 @@
             position: relative;
             width: 100%;
             height: 320px;
-            border-radius: 20px;
             overflow: hidden;
             margin-bottom: 30px;
             background: #1a1a22;
@@ -122,7 +119,6 @@
             padding: 10px 28px;
             background: #a78bfa;
             color: #0b0b0e;
-            border-radius: 30px;
             text-decoration: none;
             font-weight: 700;
             font-size: 14px;
@@ -130,9 +126,7 @@
         }
         .slider-slide .slide-content .slide-link:hover {
             background: #c4b5fd;
-            transform: scale(1.05);
         }
-        /* Кнопки навигации */
         .slider-btn {
             position: absolute;
             top: 50%;
@@ -142,7 +136,6 @@
             color: #fff;
             width: 44px;
             height: 44px;
-            border-radius: 50%;
             cursor: pointer;
             font-size: 22px;
             transition: 0.3s;
@@ -156,7 +149,6 @@
         }
         .slider-btn.prev { left: 16px; }
         .slider-btn.next { right: 16px; }
-        /* Точки (индикаторы) */
         .slider-dots {
             position: absolute;
             bottom: 16px;
@@ -169,7 +161,6 @@
         .slider-dots .dot {
             width: 12px;
             height: 12px;
-            border-radius: 50%;
             background: rgba(255,255,255,0.4);
             cursor: pointer;
             transition: 0.3s;
@@ -195,7 +186,6 @@
         .category-tab {
             padding: 10px 28px;
             border: none;
-            border-radius: 30px;
             background: #1a1a22;
             color: #9ca3af;
             cursor: pointer;
@@ -208,7 +198,6 @@
         .category-tab .count {
             background: rgba(255,255,255,0.15);
             padding: 1px 10px;
-            border-radius: 30px;
             font-size: 12px;
             margin-left: 6px;
         }
@@ -223,7 +212,6 @@
         }
         .product-card {
             background: #16161c;
-            border-radius: 20px;
             padding: 18px;
             transition: 0.25s ease;
             border: 1px solid #24242b;
@@ -239,7 +227,6 @@
             top: 14px;
             right: 14px;
             padding: 4px 12px;
-            border-radius: 30px;
             font-size: 11px;
             font-weight: 600;
             background: #2a1f3d;
@@ -250,7 +237,6 @@
         .product-card .image-wrapper {
             width: 100%;
             height: 190px;
-            border-radius: 14px;
             overflow: hidden;
             background: #1f1f26;
             position: relative;
@@ -294,11 +280,10 @@
             font-weight: 700;
             font-size: 16px;
             padding: 12px 0;
-            border-radius: 40px;
             cursor: pointer;
             transition: 0.2s;
         }
-        .buy-btn:hover { background: #c4b5fd; transform: scale(1.02); }
+        .buy-btn:hover { background: #c4b5fd; }
         .buy-btn.added { background: #34d399; }
         .empty-state {
             grid-column: 1 / -1;
@@ -325,7 +310,6 @@
             background: #1a1a22;
             max-width: 500px;
             width: 92%;
-            border-radius: 24px;
             padding: 32px 28px;
             border: 1px solid #33333e;
             max-height: 80vh;
@@ -354,7 +338,6 @@
             color: #eaeaea;
             width: 28px;
             height: 28px;
-            border-radius: 50%;
             cursor: pointer;
             font-size: 16px;
             font-weight: 700;
@@ -371,7 +354,6 @@
             border: none;
             color: #f87171;
             padding: 6px 14px;
-            border-radius: 30px;
             cursor: pointer;
             font-size: 13px;
         }
@@ -392,7 +374,6 @@
             font-weight: 700;
             font-size: 18px;
             padding: 14px 0;
-            border-radius: 40px;
             cursor: pointer;
             transition: 0.25s;
         }
@@ -416,6 +397,7 @@
         }
         .clear-cart-btn:hover { text-decoration: underline; }
 
+        /* ===== АДАПТИВ ===== */
         @media (max-width: 640px) {
             .header { flex-direction: column; align-items: stretch; gap: 8px; }
             .logo { font-size: 22px; text-align: center; }
@@ -437,7 +419,7 @@
         <header class="header">
             <div class="logo">
                 3D модели, текстуры и проекты
-                <span class="version">v3.3.0</span>
+                <span class="version">v3.4.0</span>
             </div>
             <div class="header-actions">
                 <button class="cart-btn" id="openCartBtn">
