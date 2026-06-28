@@ -1,61 +1,76 @@
+// ====== ВЕРСИЯ ======
+const VERSION = '3.0.1';
+
 // ====== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ======
 let products = [];
 let cart = [];
 let currentCategory = 'all';
+let debugVisible = true;
 
 // ====== ЗАГРУЗКА ДАННЫХ ИЗ localStorage ======
 function loadData() {
+    console.log(`🔍 [${VERSION}] Загрузка данных...`);
+    
     const savedProducts = localStorage.getItem('3dshop_products');
-    const savedCart = localStorage.getItem('3dshop_cart');
+    console.log('📦 Сырые данные из localStorage:', savedProducts ? savedProducts.substring(0, 200) + '...' : 'null');
     
     if (savedProducts) {
         try {
             const parsed = JSON.parse(savedProducts);
             if (Array.isArray(parsed) && parsed.length > 0) {
                 products = parsed;
+                console.log(`✅ Загружено ${products.length} товаров из localStorage`);
+                console.log('📋 Первый товар:', products[0]);
+                return;
+            } else {
+                console.warn('⚠️ Данные есть, но это не массив или пустой');
             }
-        } catch (e) {}
+        } catch (e) {
+            console.error('❌ Ошибка парсинга JSON:', e);
+        }
+    } else {
+        console.warn('⚠️ В localStorage нет данных по ключу "3dshop_products"');
     }
     
-    // Если нет товаров, создаем демо-данные
-    if (products.length === 0) {
-        products = [
-            {
-                id: 1,
-                name: 'Sci-Fi Rifle',
-                price: 1490,
-                desc: 'Высокополигональная модель. FBX, OBJ. 4K текстуры.',
-                image: 'https://images.pexels.com/photos/4250273/pexels-photo-4250273.jpeg?auto=compress&cs=tinysrgb&w=400',
-                category: '3d-models'
-            },
-            {
-                id: 2,
-                name: 'Low Poly House',
-                price: 890,
-                desc: 'Оптимизированная модель для игр. 1.2K полигонов.',
-                image: 'https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg?auto=compress&cs=tinysrgb&w=400',
-                category: '3d-models'
-            },
-            {
-                id: 3,
-                name: 'Metal Roughness 4K',
-                price: 590,
-                desc: 'Набор текстур металла. Diffuse, Normal, Roughness.',
-                image: 'https://images.pexels.com/photos/2528118/pexels-photo-2528118.jpeg?auto=compress&cs=tinysrgb&w=400',
-                category: 'textures'
-            },
-            {
-                id: 4,
-                name: 'Brick Wall Texture',
-                price: 390,
-                desc: 'Кирпичная стена. 2K, PBR-текстуры.',
-                image: 'https://images.pexels.com/photos/208736/pexels-photo-208736.jpeg?auto=compress&cs=tinysrgb&w=400',
-                category: 'textures'
-            }
-        ];
-        saveProducts();
-    }
-    
+    // Если нет данных, создаем демо
+    console.log('🔄 Создаем демо-данные...');
+    products = [
+        {
+            id: 1,
+            name: 'Sci-Fi Rifle',
+            price: 1490,
+            desc: 'Высокополигональная модель. FBX, OBJ. 4K текстуры.',
+            image: 'https://images.pexels.com/photos/4250273/pexels-photo-4250273.jpeg?auto=compress&cs=tinysrgb&w=400',
+            category: '3d-models'
+        },
+        {
+            id: 2,
+            name: 'Low Poly House',
+            price: 890,
+            desc: 'Оптимизированная модель для игр. 1.2K полигонов.',
+            image: 'https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg?auto=compress&cs=tinysrgb&w=400',
+            category: '3d-models'
+        },
+        {
+            id: 3,
+            name: 'Metal Roughness 4K',
+            price: 590,
+            desc: 'Набор текстур металла. Diffuse, Normal, Roughness.',
+            image: 'https://images.pexels.com/photos/2528118/pexels-photo-2528118.jpeg?auto=compress&cs=tinysrgb&w=400',
+            category: 'textures'
+        }
+    ];
+    saveProducts();
+    console.log('✅ Демо-данные созданы и сохранены');
+}
+
+function saveProducts() {
+    localStorage.setItem('3dshop_products', JSON.stringify(products));
+    console.log(`💾 Сохранено ${products.length} товаров в localStorage`);
+}
+
+function loadCart() {
+    const savedCart = localStorage.getItem('3dshop_cart');
     if (savedCart) {
         try {
             const parsed = JSON.parse(savedCart);
@@ -66,12 +81,44 @@ function loadData() {
     }
 }
 
-function saveProducts() {
-    localStorage.setItem('3dshop_products', JSON.stringify(products));
-}
-
 function saveCart() {
     localStorage.setItem('3dshop_cart', JSON.stringify(cart));
+}
+
+// ====== ОТЛАДКА ======
+function updateDebug() {
+    document.getElementById('debugCount').textContent = products.length;
+    document.getElementById('debugKey').textContent = '3dshop_products';
+    
+    const statusEl = document.getElementById('debugStatus');
+    if (products.length > 0) {
+        statusEl.textContent = `✅ ${products.length} товаров`;
+        statusEl.className = 'value green';
+    } else {
+        statusEl.textContent = '❌ Нет товаров';
+        statusEl.className = 'value red';
+    }
+}
+
+function toggleDebug() {
+    const content = document.getElementById('debugContent');
+    const btn = document.getElementById('debugToggle');
+    debugVisible = !debugVisible;
+    content.style.display = debugVisible ? 'flex' : 'none';
+    btn.textContent = debugVisible ? 'Скрыть' : 'Показать';
+}
+
+function resetData() {
+    if (!confirm('Удалить все товары из localStorage и загрузить демо?')) return;
+    localStorage.removeItem('3dshop_products');
+    localStorage.removeItem('3dshop_cart');
+    loadData();
+    loadCart();
+    renderProducts();
+    updateCategoryCounts();
+    updateCartUI();
+    updateDebug();
+    console.log('🔄 Данные сброшены');
 }
 
 // ====== ПОДСЧЕТ ТОВАРОВ ПО КАТЕГОРИЯМ ======
@@ -95,29 +142,44 @@ function renderProducts() {
         filtered = products.filter(p => p.category === currentCategory);
     }
     
+    console.log(`🎨 Рендеринг ${filtered.length} товаров (категория: ${currentCategory})`);
+    
     if (filtered.length === 0) {
         grid.innerHTML = `
             <div class="empty-state">
                 <div class="icon">📭</div>
                 <p>Нет товаров в этой категории</p>
-                <p style="font-size:14px;color:#6b7280;margin-top:6px;">Добавьте их через админ-панель</p>
+                <p style="font-size:14px;color:#6b7280;margin-top:6px;">
+                    Добавьте их через админ-панель 
+                    <a href="admin.html" style="color:#a78bfa;">→</a>
+                </p>
+                <p style="font-size:12px;color:#6b7280;margin-top:10px;">
+                    Всего товаров: ${products.length}
+                </p>
             </div>
         `;
         return;
     }
     
-    filtered.forEach(product => {
+    filtered.forEach((product, index) => {
         const card = document.createElement('div');
         card.className = 'product-card';
         
         const categoryLabel = product.category === '3d-models' ? '3D-модель' : 'Текстура';
         const categoryClass = product.category === '3d-models' ? '' : 'texture';
         
+        // Проверяем, что изображение - это ссылка на GitHub
+        const isGitHubImage = product.image && product.image.includes('raw.githubusercontent.com');
+        const imageUrl = product.image || 'https://placehold.co/400x200/1a1a22/6b7280?text=No+Image';
+        
         card.innerHTML = `
             <span class="category-badge ${categoryClass}">${categoryLabel}</span>
-            <img src="${product.image || 'https://placehold.co/400x200/1a1a22/6b7280?text=No+Image'}" 
-                 alt="${product.name}"
-                 onerror="this.src='https://placehold.co/400x200/1a1a22/6b7280?text=No+Image'">
+            <div class="image-wrapper">
+                <img src="${imageUrl}" 
+                     alt="${product.name}"
+                     loading="lazy"
+                     onerror="this.parentElement.innerHTML='<div class=\\'image-error\\'>🖼️<br><span style=\\'font-size:11px;\\'>${isGitHubImage ? 'GitHub image' : 'No image'}</span></div>'">
+            </div>
             <h3>${product.name}</h3>
             <div class="desc">${product.desc || 'Без описания'}</div>
             <div class="price">${product.price.toLocaleString()} ₽</div>
@@ -267,23 +329,24 @@ function checkout() {
     
     alert(`💳 Переход к оплате на сумму ${total} ₽\n\nТовары:\n${items}`);
     
-    // Очистка корзины
     cart = [];
     saveCart();
     updateCartUI();
     renderCartModal();
-    
-    // Закрываем модалку
     document.getElementById('cartModal').classList.remove('active');
 }
 
 // ====== ИНИЦИАЛИЗАЦИЯ ======
 document.addEventListener('DOMContentLoaded', function() {
+    console.log(`🚀 Витрина v${VERSION} загружается...`);
+    
     loadData();
+    loadCart();
     setupCategoryTabs();
     renderProducts();
     updateCategoryCounts();
     updateCartUI();
+    updateDebug();
     
     // Модалка корзины
     const modal = document.getElementById('cartModal');
@@ -304,5 +367,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // Оплата
     document.getElementById('checkoutBtn').addEventListener('click', checkout);
     
-    console.log(`🏪 Витрина загружена. Товаров: ${products.length}`);
+    // Отладка
+    document.getElementById('debugToggle').addEventListener('click', toggleDebug);
+    document.getElementById('debugRefreshBtn').addEventListener('click', function() {
+        loadData();
+        renderProducts();
+        updateCategoryCounts();
+        updateDebug();
+        console.log('🔄 Данные обновлены');
+    });
+    document.getElementById('debugResetBtn').addEventListener('click', resetData);
+    
+    console.log(`✅ Витрина v${VERSION} загружена. Товаров: ${products.length}`);
+    console.log('📋 Полный список товаров:', products);
 });
