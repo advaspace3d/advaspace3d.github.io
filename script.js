@@ -1,5 +1,5 @@
 // ====== ВЕРСИЯ ======
-const VERSION = '3.0.1';
+const VERSION = '3.0.2';
 
 // ====== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ======
 let products = [];
@@ -12,7 +12,7 @@ function loadData() {
     console.log(`🔍 [${VERSION}] Загрузка данных...`);
     
     const savedProducts = localStorage.getItem('3dshop_products');
-    console.log('📦 Сырые данные из localStorage:', savedProducts ? savedProducts.substring(0, 200) + '...' : 'null');
+    console.log('📦 Сырые данные из localStorage:', savedProducts ? savedProducts.substring(0, 300) + '...' : 'null');
     
     if (savedProducts) {
         try {
@@ -20,7 +20,11 @@ function loadData() {
             if (Array.isArray(parsed) && parsed.length > 0) {
                 products = parsed;
                 console.log(`✅ Загружено ${products.length} товаров из localStorage`);
-                console.log('📋 Первый товар:', products[0]);
+                
+                // Выводим информацию об изображениях
+                products.forEach((p, i) => {
+                    console.log(`📸 Товар ${i+1}: "${p.name}" → image: ${p.image ? p.image.substring(0, 80) + '...' : '❌ НЕТ'}`);
+                });
                 return;
             } else {
                 console.warn('⚠️ Данные есть, но это не массив или пустой');
@@ -132,6 +136,54 @@ function updateCategoryCounts() {
     document.getElementById('texturesCount').textContent = texturesCount;
 }
 
+// ====== ФУНКЦИЯ ДЛЯ ПРОВЕРКИ ИЗОБРАЖЕНИЯ ======
+function getValidImageUrl(imageData) {
+    if (!imageData) {
+        return 'https://placehold.co/400x200/1a1a22/6b7280?text=No+Image';
+    }
+    
+    // Если это уже полный URL
+    if (typeof imageData === 'string') {
+        // Проверяем, является ли это data:image (base64)
+        if (imageData.startsWith('data:image')) {
+            return imageData;
+        }
+        
+        // Проверяем, является ли это ссылкой на GitHub
+        if (imageData.includes('raw.githubusercontent.com') || 
+            imageData.includes('github.com') ||
+            imageData.startsWith('http')) {
+            // Преобразуем github.com ссылки в raw
+            if (imageData.includes('github.com') && !imageData.includes('raw.githubusercontent.com')) {
+                // https://github.com/username/repo/blob/main/path/file.jpg
+                // → https://raw.githubusercontent.com/username/repo/main/path/file.jpg
+                const rawUrl = imageData
+                    .replace('github.com', 'raw.githubusercontent.com')
+                    .replace('/blob/', '/');
+                console.log(`🔄 Преобразована ссылка: ${imageData} → ${rawUrl}`);
+                return rawUrl;
+            }
+            return imageData;
+        }
+        
+        // Если это просто имя файла или относительный путь
+        if (!imageData.startsWith('http') && !imageData.startsWith('data:')) {
+            // Пробуем как есть, возможно это загружено через админку
+            console.warn('⚠️ Подозрительный URL:', imageData);
+            return imageData;
+        }
+    }
+    
+    // Если это объект с данными
+    if (typeof imageData === 'object' && imageData !== null) {
+        if (imageData.url) return imageData.url;
+        if (imageData.src) return imageData.src;
+        if (imageData.data) return imageData.data;
+    }
+    
+    return 'https://placehold.co/400x200/1a1a22/6b7280?text=No+Image';
+}
+
 // ====== РЕНДЕР ТОВАРОВ ======
 function renderProducts() {
     const grid = document.getElementById('productGrid');
@@ -168,9 +220,12 @@ function renderProducts() {
         const categoryLabel = product.category === '3d-models' ? '3D-модель' : 'Текстура';
         const categoryClass = product.category === '3d-models' ? '' : 'texture';
         
-        // Проверяем, что изображение - это ссылка на GitHub
-        const isGitHubImage = product.image && product.image.includes('raw.githubusercontent.com');
-        const imageUrl = product.image || 'https://placehold.co/400x200/1a1a22/6b7280?text=No+Image';
+        // Получаем корректный URL изображения
+        const imageUrl = getValidImageUrl(product.image);
+        const isBase64 = imageUrl.startsWith('data:image');
+        const isGitHub = imageUrl.includes('raw.githubusercontent.com');
+        
+        console.log(`🖼️ Товар "${product.name}" → изображение: ${isBase64 ? 'base64' : isGitHub ? 'GitHub' : 'обычный URL'}`);
         
         card.innerHTML = `
             <span class="category-badge ${categoryClass}">${categoryLabel}</span>
@@ -178,7 +233,9 @@ function renderProducts() {
                 <img src="${imageUrl}" 
                      alt="${product.name}"
                      loading="lazy"
-                     onerror="this.parentElement.innerHTML='<div class=\\'image-error\\'>🖼️<br><span style=\\'font-size:11px;\\'>${isGitHubImage ? 'GitHub image' : 'No image'}</span></div>'">
+                     crossorigin="anonymous"
+                     referrerpolicy="no-referrer"
+                     onerror="this.parentElement.innerHTML='<div class=\\'image-error\\'>🖼️<br><span style=\\'font-size:11px;color:#6b7280;\\'>${isBase64 ? 'Base64 (возможно битое)' : isGitHub ? 'GitHub raw' : 'Не загружено'}</span><br><span style=\\'font-size:10px;color:#4a4a52;\\'>${imageUrl.substring(0, 40)}...</span></div>'">
             </div>
             <h3>${product.name}</h3>
             <div class="desc">${product.desc || 'Без описания'}</div>
@@ -379,5 +436,12 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('debugResetBtn').addEventListener('click', resetData);
     
     console.log(`✅ Витрина v${VERSION} загружена. Товаров: ${products.length}`);
-    console.log('📋 Полный список товаров:', products);
+    
+    // Дополнительная информация об изображениях
+    products.forEach((p, i) => {
+        console.log(`📸 [${i+1}] "${p.name}" → image: ${p.image ? 'ЕСТЬ' : 'НЕТ'}`);
+        if (p.image) {
+            console.log(`   URL: ${p.image.substring(0, 100)}${p.image.length > 100 ? '...' : ''}`);
+        }
+    });
 });
