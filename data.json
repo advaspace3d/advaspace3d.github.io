@@ -1,69 +1,42 @@
 [
-  {
-    "id": 1,
-    "name": "Sci-Fi Rifle",
-    "price": 1490,
-    "desc": "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¾ÃÂÃÂºÃÂÃÂ¾ÃÂÃÂ¿ÃÂÃÂ¾ÃÂÃÂ»ÃÂÃÂ¸ÃÂÃÂ³ÃÂÃÂ¾ÃÂÃÂ½ÃÂÃÂ°ÃÂÃÂ»ÃÂÃÂÃÂÃÂ½ÃÂÃÂ°ÃÂÃÂ ÃÂÃÂ¼ÃÂÃÂ¾ÃÂÃÂ´ÃÂÃÂµÃÂÃÂ»ÃÂÃÂ. FBX, OBJ. 4K ÃÂÃÂÃÂÃÂµÃÂÃÂºÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ.",
-    "image": "https://placehold.co/600x400/1a1a22/a78bfa?text=Sci-Fi+Rifle",
-    "category": "3d-models"
-  },
-  {
-    "id": 2,
-    "name": "Low Poly House",
-    "price": 890,
-    "desc": "ÃÂÃÂÃÂÃÂ¿ÃÂÃÂÃÂÃÂ¸ÃÂÃÂ¼ÃÂÃÂ¸ÃÂÃÂ·ÃÂÃÂ¸ÃÂÃÂÃÂÃÂ¾ÃÂÃÂ²ÃÂÃÂ°ÃÂÃÂ½ÃÂÃÂ½ÃÂÃÂ°ÃÂÃÂ ÃÂÃÂ¼ÃÂÃÂ¾ÃÂÃÂ´ÃÂÃÂµÃÂÃÂ»ÃÂÃÂ ÃÂÃÂ´ÃÂÃÂ»ÃÂÃÂ ÃÂÃÂ¸ÃÂÃÂ³ÃÂÃÂ. 1.2K ÃÂÃÂ¿ÃÂÃÂ¾ÃÂÃÂ»ÃÂÃÂ¸ÃÂÃÂ³ÃÂÃÂ¾ÃÂÃÂ½ÃÂÃÂ¾ÃÂÃÂ².",
-    "image": "https://placehold.co/600x400/1a1a22/60a5fa?text=Low+Poly+House",
-    "category": "3d-models"
-  },
-  {
-    "id": 3,
-    "name": "Metal Roughness 4K",
-    "price": 590,
-    "desc": "ÃÂÃÂÃÂÃÂ°ÃÂÃÂ±ÃÂÃÂ¾ÃÂÃÂ ÃÂÃÂÃÂÃÂµÃÂÃÂºÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂÃÂ¼ÃÂÃÂµÃÂÃÂÃÂÃÂ°ÃÂÃÂ»ÃÂÃÂ»ÃÂÃÂ°. Diffuse, Normal, Roughness.",
-    "image": "https://placehold.co/600x400/1a1a22/34d399?text=Metal+Roughness+4K",
-    "category": "textures"
-  },
-  {
-    "id": 4,
-    "name": "Brick Wall Texture",
-    "price": 390,
-    "desc": "ÃÂÃÂÃÂÃÂ¸ÃÂÃÂÃÂÃÂ¿ÃÂÃÂ¸ÃÂÃÂÃÂÃÂ½ÃÂÃÂ°ÃÂÃÂ ÃÂÃÂÃÂÃÂÃÂÃÂµÃÂÃÂ½ÃÂÃÂ°. 2K, PBR-ÃÂÃÂÃÂÃÂµÃÂÃÂºÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ.",
-    "image": "https://placehold.co/600x400/1a1a22/fbbf24?text=Brick+Wall",
-    "category": "textures"
-  },
-  {
-    "id": 5,
-    "name": "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¸ÃÂÃÂÃÂÃÂµÃÂÃÂºÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ½ÃÂÃÂÃÂÃÂ¹ ÃÂÃÂ¿ÃÂÃÂÃÂÃÂ¾ÃÂÃÂµÃÂÃÂºÃÂÃÂ ÃÂÃÂ«ÃÂÃÂÃÂÃÂÃÂÃÂ±ÃÂÃÂ»",
-    "price": 3500,
-    "desc": "ÃÂÃÂÃÂÃÂ¾ÃÂÃÂ»ÃÂÃÂ½ÃÂÃÂÃÂÃÂ¹ ÃÂÃÂ¿ÃÂÃÂÃÂÃÂ¾ÃÂÃÂµÃÂÃÂºÃÂÃÂ ÃÂÃÂ´ÃÂÃÂ¾ÃÂÃÂ¼ÃÂÃÂ°. 3D-ÃÂÃÂ¼ÃÂÃÂ¾ÃÂÃÂ´ÃÂÃÂµÃÂÃÂ»ÃÂÃÂ, ÃÂÃÂÃÂÃÂµÃÂÃÂÃÂÃÂÃÂÃÂµÃÂÃÂ¶ÃÂÃÂ¸, ÃÂÃÂ²ÃÂÃÂ¸ÃÂÃÂ·ÃÂÃÂÃÂÃÂ°ÃÂÃÂ»ÃÂÃÂ¸ÃÂÃÂ·ÃÂÃÂ°ÃÂÃÂÃÂÃÂ¸ÃÂÃÂ¸.",
-    "image": "https://placehold.co/600x400/1a1a22/34d399?text=Project+Cube",
-    "category": "projects"
-  },
-  {
-    "id": 1782651172286,
-    "name": "ÃÂÃÂµÃÂ´ÃÂ²ÃÂµÃÂ´ÃÂ",
-    "price": 500,
-    "desc": "ÃÂÃÂµÃÂ· ÃÂ¾ÃÂ¿ÃÂ¸ÃÂÃÂ°ÃÂ½ÃÂ¸ÃÂ",
-    "image": "https://raw.githubusercontent.com/advaspace3d/advaspace3d.github.io/main/uploads/3d-models/1782651170325--------.jpg",
-    "category": "3d-models",
-    "uploadedAt": "2026-06-28T12:52:52.286Z"
-  },
-  {
-    "id": 1782651506234,
-    "name": "ÐÐ¸ÑÐ°",
-    "price": 490,
-    "desc": "ÐÐµÐ· Ð¾Ð¿Ð¸ÑÐ°Ð½Ð¸Ñ",
-    "image": "https://raw.githubusercontent.com/advaspace3d/advaspace3d.github.io/main/uploads/textures/1782651504994-----.jpeg",
-    "category": "textures",
-    "uploadedAt": "2026-06-28T12:58:26.234Z"
-  },
-  {
-    "id": 1782651984562,
-    "name": "Фрукты",
-    "price": 400,
-    "desc": "Без описания",
-    "image": "https://raw.githubusercontent.com/advaspace3d/advaspace3d.github.io/main/uploads/textures/1782651982685-------.png",
-    "category": "textures",
-    "uploadedAt": "2026-06-28T13:06:24.562Z"
-  }
+    {
+        "id": 1,
+        "name": "Sci-Fi Rifle",
+        "price": 1490,
+        "desc": "High-poly model. FBX, OBJ. 4K textures.",
+        "image": "https://placehold.co/600x400/1a1a22/a78bfa?text=Sci-Fi+Rifle",
+        "category": "3d-models"
+    },
+    {
+        "id": 2,
+        "name": "Low Poly House",
+        "price": 890,
+        "desc": "Optimized for games. 1.2K polygons.",
+        "image": "https://placehold.co/600x400/1a1a22/60a5fa?text=Low+Poly+House",
+        "category": "3d-models"
+    },
+    {
+        "id": 3,
+        "name": "Metal Roughness 4K",
+        "price": 590,
+        "desc": "Metal texture set. Diffuse, Normal, Roughness.",
+        "image": "https://placehold.co/600x400/1a1a22/34d399?text=Metal+Roughness+4K",
+        "category": "textures"
+    },
+    {
+        "id": 4,
+        "name": "Brick Wall Texture",
+        "price": 390,
+        "desc": "Brick wall. 2K, PBR textures.",
+        "image": "https://placehold.co/600x400/1a1a22/fbbf24?text=Brick+Wall",
+        "category": "textures"
+    },
+    {
+        "id": 5,
+        "name": "Architectural Project Cube",
+        "price": 3500,
+        "desc": "Complete house project. 3D model, blueprints, visualizations.",
+        "image": "https://placehold.co/600x400/1a1a22/34d399?text=Project+Cube",
+        "category": "projects"
+    }
 ]

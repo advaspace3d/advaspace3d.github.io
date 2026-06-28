@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Shop — Модели, Текстуры, Проекты v3.1.1</title>
+    <title>3D Shop — Модели, Текстуры, Проекты v3.1.2</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, sans-serif; }
         body { background: #0b0b0e; color: #eaeaea; padding: 30px 20px; }
@@ -362,12 +362,12 @@
         <header class="header">
             <div class="logo">
                 ✦ 3D Shop
-                <span class="version">v3.1.1</span>
+                <span class="version">v3.1.2</span>
             </div>
             <div class="header-actions">
-                <a href="admin.html" class="admin-link">⚙️ Админка</a>
+                <a href="admin.html" class="admin-link">⚙️ Admin</a>
                 <button class="cart-btn" id="openCartBtn">
-                    🛒 Корзина
+                    🛒 Cart
                     <span class="cart-count" id="cartCount">0</span>
                 </button>
             </div>
@@ -375,23 +375,23 @@
 
         <!-- ===== ГЕРОЙ (ОПИСАНИЕ) ===== -->
         <section class="hero">
-            <h1>3D модели, текстуры и проекты</h1>
-            <p>Скачивайте сразу после покупки. Высокое качество.</p>
+            <h1>3D Models, Textures and Projects</h1>
+            <p>Download immediately after purchase. High quality.</p>
         </section>
 
         <!-- ===== ВКЛАДКИ КАТЕГОРИЙ ===== -->
         <div class="category-tabs" id="categoryTabs">
             <button class="category-tab active" data-category="all">
-                🎯 Все <span class="count" id="allCount">0</span>
+                🎯 All <span class="count" id="allCount">0</span>
             </button>
             <button class="category-tab" data-category="3d-models">
-                🎲 3D-модели <span class="count" id="modelsCount">0</span>
+                🎲 3D Models <span class="count" id="modelsCount">0</span>
             </button>
             <button class="category-tab" data-category="textures">
-                🎨 Текстуры <span class="count" id="texturesCount">0</span>
+                🎨 Textures <span class="count" id="texturesCount">0</span>
             </button>
             <button class="category-tab" data-category="projects">
-                📐 Проекты <span class="count" id="projectsCount">0</span>
+                📐 Projects <span class="count" id="projectsCount">0</span>
             </button>
         </div>
 
@@ -402,14 +402,14 @@
         <div class="modal-overlay" id="cartModal">
             <div class="modal">
                 <button class="close-modal" id="closeCartBtn">✕</button>
-                <h2>🛒 Корзина</h2>
-                <button class="clear-cart-btn" id="clearCartBtn">🗑️ Очистить корзину</button>
-                <div id="cartItems"><p style="color: #9ca3af;">Корзина пуста</p></div>
+                <h2>🛒 Cart</h2>
+                <button class="clear-cart-btn" id="clearCartBtn">🗑️ Clear cart</button>
+                <div id="cartItems"><p style="color: #9ca3af;">Cart is empty</p></div>
                 <div class="cart-total">
-                    <span>Итого</span>
+                    <span>Total</span>
                     <span id="cartTotalPrice">0 ₽</span>
                 </div>
-                <button class="checkout-btn" id="checkoutBtn">💳 Оплатить</button>
+                <button class="checkout-btn" id="checkoutBtn">💳 Checkout</button>
             </div>
         </div>
     </div>
