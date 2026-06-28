@@ -1,89 +1,75 @@
-// ====== ÐÐÐ Ð¡ÐÐ¯ ======
-const VERSION = '3.0.2';
+// ====== ВЕРСИЯ ======
+const VERSION = '3.1.0';
 
-// ====== ÐÐÐÐÐÐÐ¬ÐÐ«Ð ÐÐÐ ÐÐÐÐÐÐ«Ð ======
+// ====== КАТЕГОРИИ ======
+const CATEGORY_LABELS = {
+    '3d-models': '3D-модель',
+    'textures': 'Текстура',
+    'projects': 'Проект'
+};
+
+const CATEGORY_ICONS = {
+    '3d-models': '🎲',
+    'textures': '🎨',
+    'projects': '📐'
+};
+
+// ====== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ======
 let products = [];
 let cart = [];
 let currentCategory = 'all';
 let debugVisible = true;
 
-// ====== ÐÐÐÐ Ð£ÐÐÐ ÐÐÐÐÐ«Ð¥ ÐÐ localStorage ======
-function loadData() {
-    console.log(`ð [${VERSION}] ÐÐ°Ð³ÑÑÐ·ÐºÐ° Ð´Ð°Ð½Ð½ÑÑ...`);
+// ====== ЗАГРУЗКА ДАННЫХ ИЗ data.json ======
+async function loadData() {
+    console.log(`🔍 [${VERSION}] Загрузка данных...`);
     
-    const savedProducts = localStorage.getItem('3dshop_products');
-    console.log('ð¦ Ð¡ÑÑÑÐµ Ð´Ð°Ð½Ð½ÑÐµ Ð¸Ð· localStorage:', savedProducts ? savedProducts.substring(0, 300) + '...' : 'null');
-    
-    if (savedProducts) {
-        try {
-            const parsed = JSON.parse(savedProducts);
-            if (Array.isArray(parsed) && parsed.length > 0) {
-                products = parsed;
-                console.log(`â ÐÐ°Ð³ÑÑÐ¶ÐµÐ½Ð¾ ${products.length} ÑÐ¾Ð²Ð°ÑÐ¾Ð² Ð¸Ð· localStorage`);
-                products.forEach((p, i) => {
-                    console.log(`ð¸ Ð¢Ð¾Ð²Ð°Ñ ${i+1}: "${p.name}" â image: ${p.image ? p.image.substring(0, 80) + '...' : 'â ÐÐÐ¢'}`);
-                });
+    try {
+        const response = await fetch('data.json?t=' + Date.now());
+        if (response.ok) {
+            const data = await response.json();
+            if (Array.isArray(data) && data.length > 0) {
+                products = data;
+                localStorage.setItem('3dshop_products', JSON.stringify(products));
+                console.log(`✅ Загружено ${products.length} товаров из data.json`);
                 return;
             }
-        } catch (e) {
-            console.error('â ÐÑÐ¸Ð±ÐºÐ° Ð¿Ð°ÑÑÐ¸Ð½Ð³Ð° JSON:', e);
         }
+    } catch (e) {
+        console.warn('⚠️ Не удалось загрузить data.json:', e.message);
     }
     
-    // ÐÑÐ»Ð¸ Ð½ÐµÑ Ð´Ð°Ð½Ð½ÑÑ, ÑÐ¾Ð·Ð´Ð°ÐµÐ¼ Ð´ÐµÐ¼Ð¾ Ñ Ð ÐÐÐÐ§ÐÐÐ ÐºÐ°ÑÑÐ¸Ð½ÐºÐ°Ð¼Ð¸ (placeholder)
-    console.log('ð Ð¡Ð¾Ð·Ð´Ð°ÐµÐ¼ Ð´ÐµÐ¼Ð¾-Ð´Ð°Ð½Ð½ÑÐµ Ñ ÑÐ°Ð±Ð¾ÑÐ¸Ð¼Ð¸ ÐºÐ°ÑÑÐ¸Ð½ÐºÐ°Ð¼Ð¸...');
+    const saved = localStorage.getItem('3dshop_products');
+    if (saved) {
+        try {
+            const parsed = JSON.parse(saved);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+                products = parsed;
+                console.log(`✅ Загружено ${products.length} товаров из localStorage`);
+                return;
+            }
+        } catch (e) {}
+    }
+    
+    console.log('🔄 Создаем демо-данные...');
     products = [
-        {
-            id: 1,
-            name: 'Sci-Fi Rifle',
-            price: 1490,
-            desc: 'ÐÑÑÐ¾ÐºÐ¾Ð¿Ð¾Ð»Ð¸Ð³Ð¾Ð½Ð°Ð»ÑÐ½Ð°Ñ Ð¼Ð¾Ð´ÐµÐ»Ñ. FBX, OBJ. 4K ÑÐµÐºÑÑÑÑÑ.',
-            image: 'https://placehold.co/600x400/1a1a22/a78bfa?text=Sci-Fi+Rifle',
-            category: '3d-models'
-        },
-        {
-            id: 2,
-            name: 'Low Poly House',
-            price: 890,
-            desc: 'ÐÐ¿ÑÐ¸Ð¼Ð¸Ð·Ð¸ÑÐ¾Ð²Ð°Ð½Ð½Ð°Ñ Ð¼Ð¾Ð´ÐµÐ»Ñ Ð´Ð»Ñ Ð¸Ð³Ñ. 1.2K Ð¿Ð¾Ð»Ð¸Ð³Ð¾Ð½Ð¾Ð².',
-            image: 'https://placehold.co/600x400/1a1a22/60a5fa?text=Low+Poly+House',
-            category: '3d-models'
-        },
-        {
-            id: 3,
-            name: 'Metal Roughness 4K',
-            price: 590,
-            desc: 'ÐÐ°Ð±Ð¾Ñ ÑÐµÐºÑÑÑÑ Ð¼ÐµÑÐ°Ð»Ð»Ð°. Diffuse, Normal, Roughness.',
-            image: 'https://placehold.co/600x400/1a1a22/34d399?text=Metal+Roughness+4K',
-            category: 'textures'
-        },
-        {
-            id: 4,
-            name: 'Brick Wall Texture',
-            price: 390,
-            desc: 'ÐÐ¸ÑÐ¿Ð¸ÑÐ½Ð°Ñ ÑÑÐµÐ½Ð°. 2K, PBR-ÑÐµÐºÑÑÑÑÑ.',
-            image: 'https://placehold.co/600x400/1a1a22/fbbf24?text=Brick+Wall',
-            category: 'textures'
-        }
+        { id: 1, name: 'Sci-Fi Rifle', price: 1490, desc: 'Высокополигональная модель. FBX, OBJ. 4K текстуры.', image: 'https://placehold.co/600x400/1a1a22/a78bfa?text=Sci-Fi+Rifle', category: '3d-models' },
+        { id: 2, name: 'Low Poly House', price: 890, desc: 'Оптимизированная модель для игр. 1.2K полигонов.', image: 'https://placehold.co/600x400/1a1a22/60a5fa?text=Low+Poly+House', category: '3d-models' },
+        { id: 3, name: 'Metal Roughness 4K', price: 590, desc: 'Набор текстур металла. Diffuse, Normal, Roughness.', image: 'https://placehold.co/600x400/1a1a22/34d399?text=Metal+Roughness+4K', category: 'textures' },
+        { id: 4, name: 'Brick Wall Texture', price: 390, desc: 'Кирпичная стена. 2K, PBR-текстуры.', image: 'https://placehold.co/600x400/1a1a22/fbbf24?text=Brick+Wall', category: 'textures' },
+        { id: 5, name: 'Архитектурный проект «Куб»', price: 3500, desc: 'Полный проект дома. 3D-модель, чертежи, визуализации.', image: 'https://placehold.co/600x400/1a1a22/34d399?text=Project+Cube', category: 'projects' }
     ];
-    saveProducts();
-    console.log('â ÐÐµÐ¼Ð¾-Ð´Ð°Ð½Ð½ÑÐµ ÑÐ¾Ð·Ð´Ð°Ð½Ñ Ð¸ ÑÐ¾ÑÑÐ°Ð½ÐµÐ½Ñ');
+    localStorage.setItem('3dshop_products', JSON.stringify(products));
 }
 
 function saveProducts() {
     localStorage.setItem('3dshop_products', JSON.stringify(products));
-    console.log(`ð¾ Ð¡Ð¾ÑÑÐ°Ð½ÐµÐ½Ð¾ ${products.length} ÑÐ¾Ð²Ð°ÑÐ¾Ð² Ð² localStorage`);
 }
 
 function loadCart() {
-    const savedCart = localStorage.getItem('3dshop_cart');
-    if (savedCart) {
-        try {
-            const parsed = JSON.parse(savedCart);
-            if (Array.isArray(parsed)) {
-                cart = parsed;
-            }
-        } catch (e) {}
+    const saved = localStorage.getItem('3dshop_cart');
+    if (saved) {
+        try { cart = JSON.parse(saved); } catch (e) {}
     }
 }
 
@@ -91,102 +77,83 @@ function saveCart() {
     localStorage.setItem('3dshop_cart', JSON.stringify(cart));
 }
 
-// ====== ÐÐ¢ÐÐÐÐÐ ======
+// ====== ОТЛАДКА ======
 function updateDebug() {
     document.getElementById('debugCount').textContent = products.length;
-    document.getElementById('debugKey').textContent = '3dshop_products';
+    document.getElementById('debugKey').textContent = 'data.json';
     const statusEl = document.getElementById('debugStatus');
-    if (products.length > 0) {
-        statusEl.textContent = `â ${products.length} ÑÐ¾Ð²Ð°ÑÐ¾Ð²`;
-        statusEl.className = 'value green';
-    } else {
-        statusEl.textContent = 'â ÐÐµÑ ÑÐ¾Ð²Ð°ÑÐ¾Ð²';
-        statusEl.className = 'value red';
-    }
+    statusEl.textContent = products.length > 0 ? `✅ ${products.length} товаров` : '❌ Нет товаров';
+    statusEl.className = products.length > 0 ? 'value green' : 'value red';
 }
 
 function toggleDebug() {
     const content = document.getElementById('debugContent');
-    const btn = document.getElementById('debugToggle');
     debugVisible = !debugVisible;
     content.style.display = debugVisible ? 'flex' : 'none';
-    btn.textContent = debugVisible ? 'Ð¡ÐºÑÑÑÑ' : 'ÐÐ¾ÐºÐ°Ð·Ð°ÑÑ';
+    document.getElementById('debugToggle').textContent = debugVisible ? 'Скрыть' : 'Показать';
 }
 
 function resetData() {
-    if (!confirm('Ð£Ð´Ð°Ð»Ð¸ÑÑ Ð²ÑÐµ ÑÐ¾Ð²Ð°ÑÑ Ð¸Ð· localStorage Ð¸ Ð·Ð°Ð³ÑÑÐ·Ð¸ÑÑ Ð´ÐµÐ¼Ð¾?')) return;
+    if (!confirm('Удалить все данные?')) return;
     localStorage.removeItem('3dshop_products');
     localStorage.removeItem('3dshop_cart');
-    loadData();
-    loadCart();
-    renderProducts();
-    updateCategoryCounts();
-    updateCartUI();
-    updateDebug();
-    console.log('ð ÐÐ°Ð½Ð½ÑÐµ ÑÐ±ÑÐ¾ÑÐµÐ½Ñ');
+    location.reload();
 }
 
-// ====== ÐÐÐÐ¡Ð§ÐÐ¢ Ð¢ÐÐÐÐ ÐÐ ======
+// ====== ПОДСЧЕТ КАТЕГОРИЙ ======
 function updateCategoryCounts() {
-    const allCount = products.length;
-    const modelsCount = products.filter(p => p.category === '3d-models').length;
-    const texturesCount = products.filter(p => p.category === 'textures').length;
-    document.getElementById('allCount').textContent = allCount;
-    document.getElementById('modelsCount').textContent = modelsCount;
-    document.getElementById('texturesCount').textContent = texturesCount;
+    document.getElementById('allCount').textContent = products.length;
+    document.getElementById('modelsCount').textContent = products.filter(p => p.category === '3d-models').length;
+    document.getElementById('texturesCount').textContent = products.filter(p => p.category === 'textures').length;
+    document.getElementById('projectsCount').textContent = products.filter(p => p.category === 'projects').length;
 }
 
-// ====== Ð¤Ð£ÐÐÐ¦ÐÐ¯ ÐÐÐ¯ ÐÐ ÐÐÐÐ ÐÐ ÐÐÐÐÐ ÐÐÐÐÐÐ¯ ======
-function getValidImageUrl(imageData) {
-    if (!imageData) return 'https://placehold.co/400x200/1a1a22/6b7280?text=No+Image';
-    if (typeof imageData === 'string') {
-        if (imageData.startsWith('data:image')) return imageData;
-        if (imageData.includes('raw.githubusercontent.com') || imageData.includes('github.com') || imageData.startsWith('http')) {
-            if (imageData.includes('github.com') && !imageData.includes('raw.githubusercontent.com')) {
-                return imageData.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/');
-            }
-            return imageData;
+function getValidImageUrl(url) {
+    if (!url) return 'https://placehold.co/400x200/1a1a22/6b7280?text=No+Image';
+    if (typeof url === 'string') {
+        if (url.startsWith('data:image')) return url;
+        if (url.includes('github.com') && !url.includes('raw.githubusercontent.com')) {
+            return url.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/');
         }
-        if (!imageData.startsWith('http') && !imageData.startsWith('data:')) return imageData;
-    }
-    if (typeof imageData === 'object' && imageData !== null) {
-        if (imageData.url) return imageData.url;
-        if (imageData.src) return imageData.src;
+        return url;
     }
     return 'https://placehold.co/400x200/1a1a22/6b7280?text=No+Image';
 }
 
-// ====== Ð ÐÐÐÐÐ  Ð¢ÐÐÐÐ ÐÐ ======
+// ====== РЕНДЕР ТОВАРОВ ======
 function renderProducts() {
     const grid = document.getElementById('productGrid');
     grid.innerHTML = '';
+    
     let filtered = products;
     if (currentCategory !== 'all') {
         filtered = products.filter(p => p.category === currentCategory);
     }
-    console.log(`ð¨ Ð ÐµÐ½Ð´ÐµÑÐ¸Ð½Ð³ ${filtered.length} ÑÐ¾Ð²Ð°ÑÐ¾Ð² (ÐºÐ°ÑÐµÐ³Ð¾ÑÐ¸Ñ: ${currentCategory})`);
+    
     if (filtered.length === 0) {
-        grid.innerHTML = `<div class="empty-state"><div class="icon">ð­</div><p>ÐÐµÑ ÑÐ¾Ð²Ð°ÑÐ¾Ð² Ð² ÑÑÐ¾Ð¹ ÐºÐ°ÑÐµÐ³Ð¾ÑÐ¸Ð¸</p><p style="font-size:14px;color:#6b7280;margin-top:6px;">ÐÐ¾Ð±Ð°Ð²ÑÑÐµ Ð¸Ñ ÑÐµÑÐµÐ· Ð°Ð´Ð¼Ð¸Ð½-Ð¿Ð°Ð½ÐµÐ»Ñ <a href="admin.html" style="color:#a78bfa;">â</a></p><p style="font-size:12px;color:#6b7280;margin-top:10px;">ÐÑÐµÐ³Ð¾ ÑÐ¾Ð²Ð°ÑÐ¾Ð²: ${products.length}</p></div>`;
+        grid.innerHTML = `<div class="empty-state"><div class="icon">📭</div><p>Нет товаров в этой категории</p></div>`;
         return;
     }
-    filtered.forEach((product) => {
+    
+    filtered.forEach(p => {
         const card = document.createElement('div');
         card.className = 'product-card';
-        const categoryLabel = product.category === '3d-models' ? '3D-Ð¼Ð¾Ð´ÐµÐ»Ñ' : 'Ð¢ÐµÐºÑÑÑÑÐ°';
-        const categoryClass = product.category === '3d-models' ? '' : 'texture';
-        const imageUrl = getValidImageUrl(product.image);
+        const catLabel = CATEGORY_LABELS[p.category] || p.category;
+        const catClass = p.category === 'textures' ? 'texture' : p.category === 'projects' ? 'project' : '';
+        const imgUrl = getValidImageUrl(p.image);
         card.innerHTML = `
-            <span class="category-badge ${categoryClass}">${categoryLabel}</span>
+            <span class="category-badge ${catClass}">${catLabel}</span>
             <div class="image-wrapper">
-                <img src="${imageUrl}" alt="${product.name}" loading="lazy" crossorigin="anonymous" referrerpolicy="no-referrer" onerror="this.parentElement.innerHTML='<div class=\\'image-error\\'>ð¼ï¸<br><span style=\\'font-size:11px;color:#6b7280;\\'>ÐÐµ Ð·Ð°Ð³ÑÑÐ¶ÐµÐ½Ð¾</span></div>'">
+                <img src="${imgUrl}" alt="${p.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'image-error\\'>🖼️<br><span style=\\'font-size:11px;color:#6b7280;\\'>Не загружено</span></div>'">
             </div>
-            <h3>${product.name}</h3>
-            <div class="desc">${product.desc || 'ÐÐµÐ· Ð¾Ð¿Ð¸ÑÐ°Ð½Ð¸Ñ'}</div>
-            <div class="price">${product.price.toLocaleString()} â½</div>
-            <button class="buy-btn" data-id="${product.id}">ÐÑÐ¿Ð¸ÑÑ</button>
+            <h3>${p.name}</h3>
+            <div class="desc">${p.desc || 'Без описания'}</div>
+            <div class="price">${p.price.toLocaleString()} ₽</div>
+            <button class="buy-btn" data-id="${p.id}">Купить</button>
         `;
         grid.appendChild(card);
     });
+    
     document.querySelectorAll('.buy-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             addToCart(parseInt(this.dataset.id));
@@ -194,12 +161,11 @@ function renderProducts() {
     });
 }
 
-// ====== ÐÐÐÐÐÐÐ ======
+// ====== ВКЛАДКИ ======
 function setupCategoryTabs() {
-    const tabs = document.querySelectorAll('.category-tab');
-    tabs.forEach(tab => {
+    document.querySelectorAll('.category-tab').forEach(tab => {
         tab.addEventListener('click', function() {
-            tabs.forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
             this.classList.add('active');
             currentCategory = this.dataset.category;
             renderProducts();
@@ -207,43 +173,42 @@ function setupCategoryTabs() {
     });
 }
 
-// ====== ÐÐÐ ÐÐÐÐ ======
-function addToCart(productId) {
-    const product = products.find(p => p.id === productId);
+// ====== КОРЗИНА ======
+function addToCart(id) {
+    const product = products.find(p => p.id === id);
     if (!product) return;
-    const existing = cart.find(item => item.id === productId);
+    const existing = cart.find(i => i.id === id);
     if (existing) {
         existing.quantity += 1;
     } else {
-        cart.push({ id: product.id, name: product.name, price: product.price, category: product.category, quantity: 1 });
+        cart.push({ ...product, quantity: 1 });
     }
     saveCart();
     updateCartUI();
-    const btn = document.querySelector(`.buy-btn[data-id="${productId}"]`);
+    const btn = document.querySelector(`.buy-btn[data-id="${id}"]`);
     if (btn) {
-        const originalText = btn.textContent;
-        btn.textContent = 'â ÐÐ¾Ð±Ð°Ð²Ð»ÐµÐ½Ð¾!';
+        btn.textContent = '✅ Добавлено!';
         btn.classList.add('added');
         setTimeout(() => {
-            btn.textContent = originalText;
+            btn.textContent = 'Купить';
             btn.classList.remove('added');
         }, 1200);
     }
 }
 
-function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
+function removeFromCart(id) {
+    cart = cart.filter(i => i.id !== id);
     saveCart();
     updateCartUI();
     renderCartModal();
 }
 
-function updateQuantity(productId, delta) {
-    const item = cart.find(i => i.id === productId);
+function updateQuantity(id, delta) {
+    const item = cart.find(i => i.id === id);
     if (!item) return;
     item.quantity += delta;
     if (item.quantity <= 0) {
-        cart = cart.filter(i => i.id !== productId);
+        cart = cart.filter(i => i.id !== id);
     }
     saveCart();
     updateCartUI();
@@ -252,7 +217,7 @@ function updateQuantity(productId, delta) {
 
 function clearCart() {
     if (cart.length === 0) return;
-    if (!confirm('ÐÑÐ¸ÑÑÐ¸ÑÑ ÐºÐ¾ÑÐ·Ð¸Ð½Ñ?')) return;
+    if (!confirm('Очистить корзину?')) return;
     cart = [];
     saveCart();
     updateCartUI();
@@ -260,53 +225,54 @@ function clearCart() {
 }
 
 function updateCartUI() {
-    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const count = cart.reduce((s, i) => s + i.quantity, 0);
     document.getElementById('cartCount').textContent = count;
 }
 
 function getCartTotal() {
-    return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    return cart.reduce((s, i) => s + i.price * i.quantity, 0);
 }
 
 function renderCartModal() {
     const container = document.getElementById('cartItems');
     const totalSpan = document.getElementById('cartTotalPrice');
     if (cart.length === 0) {
-        container.innerHTML = '<p style="color: #9ca3af;">ÐÐ¾ÑÐ·Ð¸Ð½Ð° Ð¿ÑÑÑÐ°</p>';
-        totalSpan.textContent = '0 â½';
+        container.innerHTML = '<p style="color: #9ca3af;">Корзина пуста</p>';
+        totalSpan.textContent = '0 ₽';
         return;
     }
     let html = '';
     cart.forEach(item => {
-        const categoryLabel = item.category === '3d-models' ? 'ð² 3D' : 'ð¨ Ð¢ÐµÐºÑÑÑÑÐ°';
+        const icon = CATEGORY_ICONS[item.category] || '📦';
+        const label = CATEGORY_LABELS[item.category] || item.category;
         html += `
             <div class="cart-item">
                 <div class="cart-item-info">
                     <span class="cart-item-name">${item.name}</span>
-                    <span class="cart-item-category">${categoryLabel}</span>
-                    <span class="cart-item-price">${item.price} â½</span>
+                    <span class="cart-item-category">${icon} ${label}</span>
+                    <span class="cart-item-price">${item.price} ₽</span>
                 </div>
                 <div class="cart-item-qty">
-                    <button onclick="updateQuantity(${item.id}, -1)">â</button>
+                    <button onclick="updateQuantity(${item.id}, -1)">−</button>
                     <span class="qty-num">${item.quantity}</span>
                     <button onclick="updateQuantity(${item.id}, 1)">+</button>
-                    <button class="remove-item" onclick="removeFromCart(${item.id})">â</button>
+                    <button class="remove-item" onclick="removeFromCart(${item.id})">✕</button>
                 </div>
             </div>
         `;
     });
     container.innerHTML = html;
-    totalSpan.textContent = getCartTotal().toLocaleString() + ' â½';
+    totalSpan.textContent = getCartTotal().toLocaleString() + ' ₽';
 }
 
 function checkout() {
     if (cart.length === 0) {
-        alert('ÐÐ¾ÑÐ·Ð¸Ð½Ð° Ð¿ÑÑÑÐ°!');
+        alert('Корзина пуста!');
         return;
     }
     const total = getCartTotal();
-    const items = cart.map(i => `- ${i.name} Ã ${i.quantity}`).join('\n');
-    alert(`ð³ ÐÐµÑÐµÑÐ¾Ð´ Ðº Ð¾Ð¿Ð»Ð°ÑÐµ Ð½Ð° ÑÑÐ¼Ð¼Ñ ${total} â½\n\nÐ¢Ð¾Ð²Ð°ÑÑ:\n${items}`);
+    const items = cart.map(i => `- ${i.name} × ${i.quantity}`).join('\n');
+    alert(`💳 Переход к оплате на сумму ${total} ₽\n\nТовары:\n${items}`);
     cart = [];
     saveCart();
     updateCartUI();
@@ -314,16 +280,17 @@ function checkout() {
     document.getElementById('cartModal').classList.remove('active');
 }
 
-// ====== ÐÐÐÐ¦ÐÐÐÐÐÐÐ¦ÐÐ¯ ======
-document.addEventListener('DOMContentLoaded', function() {
-    console.log(`ð ÐÐ¸ÑÑÐ¸Ð½Ð° v${VERSION} Ð·Ð°Ð³ÑÑÐ¶Ð°ÐµÑÑÑ...`);
-    loadData();
+// ====== ИНИЦИАЛИЗАЦИЯ ======
+document.addEventListener('DOMContentLoaded', async function() {
+    console.log(`🚀 Витрина v${VERSION} загружается...`);
+    await loadData();
     loadCart();
     setupCategoryTabs();
     renderProducts();
     updateCategoryCounts();
     updateCartUI();
     updateDebug();
+    
     const modal = document.getElementById('cartModal');
     document.getElementById('openCartBtn').addEventListener('click', function() {
         renderCartModal();
@@ -338,16 +305,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('clearCartBtn').addEventListener('click', clearCart);
     document.getElementById('checkoutBtn').addEventListener('click', checkout);
     document.getElementById('debugToggle').addEventListener('click', toggleDebug);
-    document.getElementById('debugRefreshBtn').addEventListener('click', function() {
-        loadData();
-        renderProducts();
-        updateCategoryCounts();
-        updateDebug();
-        console.log('ð ÐÐ°Ð½Ð½ÑÐµ Ð¾Ð±Ð½Ð¾Ð²Ð»ÐµÐ½Ñ');
-    });
+    document.getElementById('debugRefreshBtn').addEventListener('click', () => location.reload());
     document.getElementById('debugResetBtn').addEventListener('click', resetData);
-    console.log(`â ÐÐ¸ÑÑÐ¸Ð½Ð° v${VERSION} Ð·Ð°Ð³ÑÑÐ¶ÐµÐ½Ð°. Ð¢Ð¾Ð²Ð°ÑÐ¾Ð²: ${products.length}`);
-    products.forEach((p, i) => {
-        console.log(`ð¸ [${i+1}] "${p.name}" â image: ${p.image ? 'ÐÐ¡Ð¢Ð¬' : 'ÐÐÐ¢'}`);
-    });
+    
+    console.log(`✅ Витрина v${VERSION} загружена. Товаров: ${products.length}`);
 });
