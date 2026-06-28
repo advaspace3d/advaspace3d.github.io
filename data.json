@@ -1,42 +1,51 @@
 [
-    {
-        "id": 1,
-        "name": "Sci-Fi Rifle",
-        "price": 1490,
-        "desc": "Высокополигональная модель. FBX, OBJ. 4K текстуры.",
-        "image": "https://placehold.co/600x400/1a1a22/a78bfa?text=Sci-Fi+Rifle",
-        "category": "3d-models"
-    },
-    {
-        "id": 2,
-        "name": "Low Poly House",
-        "price": 890,
-        "desc": "Оптимизированная модель для игр. 1.2K полигонов.",
-        "image": "https://placehold.co/600x400/1a1a22/60a5fa?text=Low+Poly+House",
-        "category": "3d-models"
-    },
-    {
-        "id": 3,
-        "name": "Metal Roughness 4K",
-        "price": 590,
-        "desc": "Набор текстур металла. Diffuse, Normal, Roughness.",
-        "image": "https://placehold.co/600x400/1a1a22/34d399?text=Metal+Roughness+4K",
-        "category": "textures"
-    },
-    {
-        "id": 4,
-        "name": "Brick Wall Texture",
-        "price": 390,
-        "desc": "Кирпичная стена. 2K, PBR-текстуры.",
-        "image": "https://placehold.co/600x400/1a1a22/fbbf24?text=Brick+Wall",
-        "category": "textures"
-    },
-    {
-        "id": 5,
-        "name": "Архитектурный проект «Куб»",
-        "price": 3500,
-        "desc": "Полный проект дома. 3D-модель, чертежи, визуализации.",
-        "image": "https://placehold.co/600x400/1a1a22/34d399?text=Project+Cube",
-        "category": "projects"
-    }
+  {
+    "id": 1,
+    "name": "Sci-Fi Rifle",
+    "price": 1490,
+    "desc": "ÐÑÑÐ¾ÐºÐ¾Ð¿Ð¾Ð»Ð¸Ð³Ð¾Ð½Ð°Ð»ÑÐ½Ð°Ñ Ð¼Ð¾Ð´ÐµÐ»Ñ. FBX, OBJ. 4K ÑÐµÐºÑÑÑÑÑ.",
+    "image": "https://placehold.co/600x400/1a1a22/a78bfa?text=Sci-Fi+Rifle",
+    "category": "3d-models"
+  },
+  {
+    "id": 2,
+    "name": "Low Poly House",
+    "price": 890,
+    "desc": "ÐÐ¿ÑÐ¸Ð¼Ð¸Ð·Ð¸ÑÐ¾Ð²Ð°Ð½Ð½Ð°Ñ Ð¼Ð¾Ð´ÐµÐ»Ñ Ð´Ð»Ñ Ð¸Ð³Ñ. 1.2K Ð¿Ð¾Ð»Ð¸Ð³Ð¾Ð½Ð¾Ð².",
+    "image": "https://placehold.co/600x400/1a1a22/60a5fa?text=Low+Poly+House",
+    "category": "3d-models"
+  },
+  {
+    "id": 3,
+    "name": "Metal Roughness 4K",
+    "price": 590,
+    "desc": "ÐÐ°Ð±Ð¾Ñ ÑÐµÐºÑÑÑÑ Ð¼ÐµÑÐ°Ð»Ð»Ð°. Diffuse, Normal, Roughness.",
+    "image": "https://placehold.co/600x400/1a1a22/34d399?text=Metal+Roughness+4K",
+    "category": "textures"
+  },
+  {
+    "id": 4,
+    "name": "Brick Wall Texture",
+    "price": 390,
+    "desc": "ÐÐ¸ÑÐ¿Ð¸ÑÐ½Ð°Ñ ÑÑÐµÐ½Ð°. 2K, PBR-ÑÐµÐºÑÑÑÑÑ.",
+    "image": "https://placehold.co/600x400/1a1a22/fbbf24?text=Brick+Wall",
+    "category": "textures"
+  },
+  {
+    "id": 5,
+    "name": "ÐÑÑÐ¸ÑÐµÐºÑÑÑÐ½ÑÐ¹ Ð¿ÑÐ¾ÐµÐºÑ Â«ÐÑÐ±Â»",
+    "price": 3500,
+    "desc": "ÐÐ¾Ð»Ð½ÑÐ¹ Ð¿ÑÐ¾ÐµÐºÑ Ð´Ð¾Ð¼Ð°. 3D-Ð¼Ð¾Ð´ÐµÐ»Ñ, ÑÐµÑÑÐµÐ¶Ð¸, Ð²Ð¸Ð·ÑÐ°Ð»Ð¸Ð·Ð°ÑÐ¸Ð¸.",
+    "image": "https://placehold.co/600x400/1a1a22/34d399?text=Project+Cube",
+    "category": "projects"
+  },
+  {
+    "id": 1782651172286,
+    "name": "Медведь",
+    "price": 500,
+    "desc": "Без описания",
+    "image": "https://raw.githubusercontent.com/advaspace3d/advaspace3d.github.io/main/uploads/3d-models/1782651170325--------.jpg",
+    "category": "3d-models",
+    "uploadedAt": "2026-06-28T12:52:52.286Z"
+  }
 ]
