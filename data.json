@@ -1,45 +1,42 @@
 [
-  {
-    "id": 1,
-    "name": "Sci-Fi Rifle",
-    "price": 1490,
-    "desc": "Высокополигональная модель. FBX, OBJ. 4K текстуры.",
-    "image": "https://placehold.co/600x400/1a1a22/a78bfa?text=Sci-Fi+Rifle",
-    "category": "3d-models"
-  },
-  {
-    "id": 2,
-    "name": "Low Poly House",
-    "price": 890,
-    "desc": "ÐÑÑÐ¾ÐºÐ¾Ð¿Ð¾Ð»Ð¸Ð³Ð¾Ð½Ð°Ð»ÑÐ½Ð°Ñ Ð¼Ð¾Ð´ÐµÐ»Ñ. FBX, OBJ. 4K ÑÐµÐºÑÑÑÑÑ.",
-    "image": "https://placehold.co/600x400/1a1a22/60a5fa?text=Low+Poly+House",
-    "category": "3d-models"
-  },
-  {
-    "id": 1782670827844,
-    "name": "ÐÐµÐ´Ð²ÐµÐ´Ñ",
-    "price": 530,
-    "desc": "ÐÐ¾Ð´ÐµÐ»Ñ",
-    "image": "https://github.com/advaspace3d/advaspace3d.github.io/blob/main/uploads/3d-models/1782648579150--------.jpg",
-    "category": "3d-models",
-    "uploadedAt": "2026-06-28T18:20:27.844Z"
-  },
-  {
-    "id": 1782671323723,
-    "name": "ÐÐ¸ÑÐ°",
-    "price": 444,
-    "desc": "Ð¢ÐµÐºÑÑÑÑÐ°",
-    "image": "https://raw.githubusercontent.com/advaspace3d/advaspace3d.github.io/main/uploads/projects/1782671322398-Ð»Ð¸ÑÐ°.jpeg",
-    "category": "projects",
-    "uploadedAt": "2026-06-28T18:28:43.723Z"
-  },
-  {
-    "id": 1782673277431,
-    "name": "Фрукты",
-    "price": 250,
-    "desc": "Без описания",
-    "image": "https://raw.githubusercontent.com/advaspace3d/advaspace3d.github.io/main/uploads/textures/1782673274800-фрукты.png",
-    "category": "textures",
-    "uploadedAt": "2026-06-28T19:01:17.431Z"
-  }
+    {
+        "id": 1,
+        "name": "Sci-Fi Rifle",
+        "price": 1490,
+        "desc": "Высокополигональная модель. FBX, OBJ. 4K текстуры.",
+        "image": "https://placehold.co/600x400/1a1a22/a78bfa?text=Sci-Fi+Rifle",
+        "category": "3d-models"
+    },
+    {
+        "id": 2,
+        "name": "Low Poly House",
+        "price": 890,
+        "desc": "Оптимизированная модель для игр. 1.2K полигонов.",
+        "image": "https://placehold.co/600x400/1a1a22/60a5fa?text=Low+Poly+House",
+        "category": "3d-models"
+    },
+    {
+        "id": 3,
+        "name": "Metal Roughness 4K",
+        "price": 590,
+        "desc": "Набор текстур металла. Diffuse, Normal, Roughness.",
+        "image": "https://placehold.co/600x400/1a1a22/34d399?text=Metal+Roughness+4K",
+        "category": "textures"
+    },
+    {
+        "id": 4,
+        "name": "Brick Wall Texture",
+        "price": 390,
+        "desc": "Кирпичная стена. 2K, PBR-текстуры.",
+        "image": "https://placehold.co/600x400/1a1a22/fbbf24?text=Brick+Wall",
+        "category": "textures"
+    },
+    {
+        "id": 5,
+        "name": "Архитектурный проект «Куб»",
+        "price": 3500,
+        "desc": "Полный проект дома. 3D-модель, чертежи, визуализации.",
+        "image": "https://placehold.co/600x400/1a1a22/34d399?text=Project+Cube",
+        "category": "projects"
+    }
 ]
