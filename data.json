@@ -3,7 +3,7 @@
     "id": 1,
     "name": "Sci-Fi Rifle",
     "price": 1490,
-    "desc": "ÐÑÑÐ¾ÐºÐ¾Ð¿Ð¾Ð»Ð¸Ð³Ð¾Ð½Ð°Ð»ÑÐ½Ð°Ñ Ð¼Ð¾Ð´ÐµÐ»Ñ. FBX, OBJ. 4K ÑÐµÐºÑÑÑÑÑ.",
+    "desc": "ÃÂÃÂÃÂÃÂ¾ÃÂºÃÂ¾ÃÂ¿ÃÂ¾ÃÂ»ÃÂ¸ÃÂ³ÃÂ¾ÃÂ½ÃÂ°ÃÂ»ÃÂÃÂ½ÃÂ°ÃÂ ÃÂ¼ÃÂ¾ÃÂ´ÃÂµÃÂ»ÃÂ. FBX, OBJ. 4K ÃÂÃÂµÃÂºÃÂÃÂÃÂÃÂÃÂ.",
     "image": "https://placehold.co/600x400/1a1a22/a78bfa?text=Sci-Fi+Rifle",
     "category": "3d-models"
   },
@@ -11,7 +11,7 @@
     "id": 2,
     "name": "Low Poly House",
     "price": 890,
-    "desc": "\u0412\u044b\u0441\u043e\u043a\u043e\u043f\u043e\u043b\u0438\u0433\u043e\u043d\u0430\u043b\u044c\u043d\u0430\u044f \u043c\u043e\u0434\u0435\u043b\u044c. FBX, OBJ. 4K \u0442\u0435\u043a\u0441\u0442\u0443\u0440\u044b.",
+    "desc": "Высокополигональная модель. FBX, OBJ. 4K текстуры.",
     "image": "https://placehold.co/600x400/1a1a22/60a5fa?text=Low+Poly+House",
     "category": "3d-models"
   },
@@ -19,7 +19,7 @@
     "id": 3,
     "name": "Metal Roughness 4K",
     "price": 590,
-    "desc": "ÐÐ°Ð±Ð¾Ñ ÑÐµÐºÑÑÑÑ Ð¼ÐµÑÐ°Ð»Ð»Ð°. Diffuse, Normal, Roughness.",
+    "desc": "ÃÂÃÂ°ÃÂ±ÃÂ¾ÃÂ ÃÂÃÂµÃÂºÃÂÃÂÃÂÃÂ ÃÂ¼ÃÂµÃÂÃÂ°ÃÂ»ÃÂ»ÃÂ°. Diffuse, Normal, Roughness.",
     "image": "https://placehold.co/600x400/1a1a22/34d399?text=Metal+Roughness+4K",
     "category": "textures"
   },
@@ -27,25 +27,34 @@
     "id": 4,
     "name": "Brick Wall Texture",
     "price": 390,
-    "desc": "ÐÐ¸ÑÐ¿Ð¸ÑÐ½Ð°Ñ ÑÑÐµÐ½Ð°. 2K, PBR-ÑÐµÐºÑÑÑÑÑ.",
+    "desc": "ÃÂÃÂ¸ÃÂÃÂ¿ÃÂ¸ÃÂÃÂ½ÃÂ°ÃÂ ÃÂÃÂÃÂµÃÂ½ÃÂ°. 2K, PBR-ÃÂÃÂµÃÂºÃÂÃÂÃÂÃÂÃÂ.",
     "image": "https://placehold.co/600x400/1a1a22/fbbf24?text=Brick+Wall",
     "category": "textures"
   },
   {
     "id": 5,
-    "name": "ÐÑÑÐ¸ÑÐµÐºÑÑÑÐ½ÑÐ¹ Ð¿ÑÐ¾ÐµÐºÑ Â«ÐÑÐ±Â»",
+    "name": "ÃÂÃÂÃÂÃÂ¸ÃÂÃÂµÃÂºÃÂÃÂÃÂÃÂ½ÃÂÃÂ¹ ÃÂ¿ÃÂÃÂ¾ÃÂµÃÂºÃÂ ÃÂ«ÃÂÃÂÃÂ±ÃÂ»",
     "price": 3500,
-    "desc": "ÐÐ¾Ð»Ð½ÑÐ¹ Ð¿ÑÐ¾ÐµÐºÑ Ð´Ð¾Ð¼Ð°. 3D-Ð¼Ð¾Ð´ÐµÐ»Ñ, ÑÐµÑÑÐµÐ¶Ð¸, Ð²Ð¸Ð·ÑÐ°Ð»Ð¸Ð·Ð°ÑÐ¸Ð¸.",
+    "desc": "ÃÂÃÂ¾ÃÂ»ÃÂ½ÃÂÃÂ¹ ÃÂ¿ÃÂÃÂ¾ÃÂµÃÂºÃÂ ÃÂ´ÃÂ¾ÃÂ¼ÃÂ°. 3D-ÃÂ¼ÃÂ¾ÃÂ´ÃÂµÃÂ»ÃÂ, ÃÂÃÂµÃÂÃÂÃÂµÃÂ¶ÃÂ¸, ÃÂ²ÃÂ¸ÃÂ·ÃÂÃÂ°ÃÂ»ÃÂ¸ÃÂ·ÃÂ°ÃÂÃÂ¸ÃÂ¸.",
     "image": "https://placehold.co/600x400/1a1a22/34d399?text=Project+Cube",
     "category": "projects"
   },
   {
     "id": 1782670827844,
-    "name": "Медведь",
+    "name": "ÐÐµÐ´Ð²ÐµÐ´Ñ",
     "price": 530,
-    "desc": "Без описания",
-    "image": "https://raw.githubusercontent.com/advaspace3d/advaspace3d.github.io/main/uploads/3d-models/1782670826198-медведь.jpg",
+    "desc": "ÐÐµÐ· Ð¾Ð¿Ð¸ÑÐ°Ð½Ð¸Ñ",
+    "image": "https://raw.githubusercontent.com/advaspace3d/advaspace3d.github.io/main/uploads/3d-models/1782670826198-Ð¼ÐµÐ´Ð²ÐµÐ´Ñ.jpg",
     "category": "3d-models",
     "uploadedAt": "2026-06-28T18:20:27.844Z"
+  },
+  {
+    "id": 1782671323723,
+    "name": "Лиса",
+    "price": 444,
+    "desc": "Текстура",
+    "image": "https://raw.githubusercontent.com/advaspace3d/advaspace3d.github.io/main/uploads/projects/1782671322398-лиса.jpeg",
+    "category": "projects",
+    "uploadedAt": "2026-06-28T18:28:43.723Z"
   }
 ]
