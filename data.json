@@ -1,7 +1,4 @@
 [
- 
-  
- 
   {
     "id": 1782674560330,
     "name": "Медведь",
@@ -100,5 +97,14 @@
     "image": "https://raw.githubusercontent.com/advaspace3d/advaspace3d.github.io/main/uploads/3d-models/1782677935059.png",
     "category": "3d-models",
     "uploadedAt": "2026-06-28T20:18:56.851Z"
+  },
+  {
+    "id": 1782706152289,
+    "name": "Лиса",
+    "price": 543,
+    "desc": "Без описания",
+    "image": "https://raw.githubusercontent.com/advaspace3d/advaspace3d.github.io/main/uploads/3d-models/1782706151008.jpeg",
+    "category": "3d-models",
+    "uploadedAt": "2026-06-29T04:09:12.289Z"
   }
 ]
