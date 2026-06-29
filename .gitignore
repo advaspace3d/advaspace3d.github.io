@@ -1,0 +1,5 @@
+# НЕ ЗАГРУЖАТЬ НА GITHUB!
+config.js
+*.log
+.DS_Store
+node_modules/
