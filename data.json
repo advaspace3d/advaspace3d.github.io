@@ -1,14 +1,5 @@
 [
   {
-    "id": 1782676896499,
-    "name": "Медведь",
-    "price": 345,
-    "desc": "Без описания",
-    "image": "https://raw.githubusercontent.com/advaspace3d/advaspace3d.github.io/main/uploads/3d-models/1782676894800.jpg",
-    "category": "3d-models",
-    "uploadedAt": "2026-06-28T20:01:36.499Z"
-  },
-  {
     "id": 1782677125192,
     "name": "Слон",
     "price": 2345,
